@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BookProposal;
 use App\Models\User;
 use App\Models\BookCategory;
+use App\Models\BookPublisher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -22,8 +23,9 @@ class BookProposalController extends Controller
     {
         // $users = User::all();
         $bookCategories = BookCategory::all();
+        $publishers = BookPublisher::all();
 
-        return view('pages.proposal.create', compact('bookCategories'));
+        return view('pages.proposal.create', compact('bookCategories', 'publishers'));
     }
 
     public function store(Request $request)
@@ -32,7 +34,7 @@ class BookProposalController extends Controller
             // 'user_id' => 'required|exists:users,id',
             'category_id' => 'required|exists:book_categories,id',
             'book_title' => 'required|string|max:255',
-            'publisher' => 'required|string|max:255',
+            'publication_year' => 'required',
             'book_author' => 'nullable|string|max:255',
             'book_cover_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'book_description' => 'required|string',
@@ -44,8 +46,18 @@ class BookProposalController extends Controller
         $bookProposal->user_id = Auth::user()->id;
         $bookProposal->category_id = $request->category_id;
         $bookProposal->book_title = $request->book_title;
-        $bookProposal->publisher = $request->publisher;
+        $bookProposal->publication_year = $request->publication_year;
         $bookProposal->book_author = $request->book_author;
+        if ($request->publisher_id === 'more') {
+            $publisher = new BookPublisher();
+            $publisher->name = $request->publisher_name;
+            $publisher->address = $request->publisher_address;
+            $publisher->phone = $request->publisher_phone;
+            $publisher->save();
+            $bookProposal->publisher_id = $publisher->id;
+        } else {
+            $bookProposal->publisher_id = $request->publisher_id;
+        }
         if ($request->hasFile('book_cover_path')) {
             $book_cover_path = $request->file('book_cover_path');
             $filename = time() . '.' . $book_cover_path->getClientOriginalExtension();

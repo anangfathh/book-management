@@ -1,18 +1,21 @@
 @extends('layouts.master')
 
 @section('content')
-    <h1>Book Donation List</h1>
+    <h1>Riwayat Buku Donasi</h1>
     <div class="container">
-        <a href="{{ route('donation.create') }}" class="btn btn-primary mb-3">Create Book</a>
+        <a href="{{ route('donation.create') }}" class="btn btn-primary mb-3">Donasi Buku</a>
         <table class="table">
             <thead>
                 <tr>
                 <th scope="col">No</th>
-                <th scope="col">Title</th>
+                <th scope="col">Judul Buku</th>
                 <th scope="col">Author</th>
                 <th scope="col">Status</th>
                 <th scope="col">Kategori</th>
                 <th scope="col">Cover</th>
+                @role('admin')
+                <th scope="col">Donatur</th>
+                @endrole
                 <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -40,6 +43,9 @@
                         <img src="https://via.placeholder.com/640x480.png/F6F5F2?text=NoImageAvailable" alt="No Image" width="100">
                     @endunless
                 </td>
+                @role('admin')
+                <td>{{ $donation->user->name }}</td>
+                @endrole
                 <td>
                     <a href="{{ route('donation.show', $donation->id) }}" class="btn btn-primary btn-sm">View</a>
                     <a href="{{ route('donation.edit', $donation->id) }}" class="btn btn-warning btn-sm">Edit</a>

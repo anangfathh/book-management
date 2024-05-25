@@ -22,4 +22,8 @@ class BookProposal extends Model
     {
         return $this->belongsTo(BookCategory::class, 'category_id');
     }
+    public function publisher()
+    {
+        return $this->belongsTo(BookPublisher::class, 'publisher_id');
+    }
 }

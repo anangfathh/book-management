@@ -24,7 +24,7 @@
                         <table class="table table-striped table-product">
                             <tbody>
                                 <tr>
-                                    <td width="390">Title</td>
+                                    <td width="390">Judul Buku</td>
                                     <td>{{ $book->title }}</td>
                                 </tr>
                                 <tr>
@@ -32,16 +32,20 @@
                                     <td>{{ $book->author }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Category</td>
+                                    <td>Penerbit</td>
+                                    <td>{{ $book->publisher->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tahun Terbit</td>
+                                    <td>{{ $book->publication_year }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Kategori Buku</td>
                                     <td>{{ $book->category->name }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Publisher</td>
-                                    <td>{{ $book->publisher }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Type</td>
-                                    <td>{{ $book->jenis }}</td>
+                                    <td>Tipe Buku</td>
+                                    <td>{{ ucfirst($book->jenis) }}</td>
                                 </tr>
                                 <tr>
                                     <td>Jumlah</td>

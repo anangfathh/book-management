@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('category_id')->references('id')->on('book_categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('publisher_id')->references('id')->on('book_publishers')->onDelete('cascade')->onUpdate('cascade');
             $table->string('book_title');
-            $table->string('publisher');
+            $table->string('publication_year');
             $table->string('book_author')->nullable();
             $table->string('book_cover_path')->nullable();
             $table->text('book_description');

@@ -1,7 +1,17 @@
 @extends('layouts.master')
 
 @section('content')
-<h1>Create Book</h1>
+<h1>Edit Book</h1>
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 <form action="{{ route('books.update', $book->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
@@ -24,9 +34,43 @@
     </div>
 
     <div class="form-group">
-        <label for="publisher">Publisher</label>
-        <input type="text" name="publisher" id="publisher" class="form-control @error('publisher') is-invalid @enderror" value="{{ $book->publisher }}" required>
-        @error('publisher')
+        <label for="publication_year">Publication Year</label>
+        <input type="text" name="publication_year" id="publication_year" class="form-control @error('publication_year') is-invalid @enderror" value="{{ $book->publication_year }}" required>
+        @error('publication_year')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="form-group">
+        <label for="publisher_id">Publisher</label>
+        <select name="publisher_id" id="searchable-dropdown" class="form-control @error('publisher_id') is-invalid @enderror" required>
+            <option value="" selected disabled>Not selected</option>
+            @foreach ($publishers as $publisher)
+                <option value="{{ $publisher->id }}" {{ old('publisher_id') == $publisher->id ? 'selected' : '' }}>{{ $publisher->name }}</option>
+            @endforeach
+            <option value="more">Add Manually</option>
+        </select>
+        @error('publisher_id')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div id="custom-option-form" class="form-group" style="display: none;">
+        <label for="custom-option-name">Publisher Name</label>
+        <input type="text" name="publisher_name" id="custom-option-name" class="form-control @error('publisher_name') is-invalid @enderror">
+        @error('publisher_name')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+
+        <label for="custom-option-address">Publisher Address</label>
+        <input type="text" name="publisher_address" id="custom-option-address" class="form-control @error('publisher_address') is-invalid @enderror">
+        @error('publisher_address')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+
+        <label for="custom-option-phone">Publisher Phone</label>
+        <input type="text" name="publisher_phone" id="custom-option-phone" class="form-control @error('publisher_phone') is-invalid @enderror">
+        @error('publisher_phone')
             <div class="invalid-feedback">{{ $message }}</div>
         @enderror
     </div>
@@ -55,8 +99,8 @@
         <label for="jenis">Jenis</label>
         <select name="jenis" id="jenis" class="form-control @error('jenis') is-invalid @enderror" required>
             <option value="" selected disabled>Not selected</option>
-            <option value="softfile" {{ old('jenis') == 'softfile' ? 'selected' : '' }}>Softfile</option>
-            <option value="hardfile" {{ old('jenis') == 'hardfile' ? 'selected' : '' }}>Hardfile</option>
+            <option value="softfile">Softfile</option>
+            <option value="hardfile">Hardfile</option>
         </select>
         @error('jenis')
             <div class="invalid-feedback">{{ $message }}</div>
@@ -92,5 +136,20 @@
             document.getElementById('pdf-path-field').style.display = 'none';
         }
     });
+
+     $(document).ready(function() {
+                $('#searchable-dropdown').select2({
+                    placeholder: "Select a state",
+                    allowClear: true
+                });
+                
+        $('#searchable-dropdown').on('change', function() {
+            if (this.value === 'more') {
+                $('#custom-option-form').show();
+            } else {
+                $('#custom-option-form').hide();
+            }
+        });
+            });
 </script>
 @endsection

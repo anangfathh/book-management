@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Book;
 use App\Models\BookCategory;
+use App\Models\BookPublisher;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -27,8 +28,9 @@ class BookFactory extends Factory
         return [
             'title' => $this->faker->sentence(),
             'author' => $this->faker->name(),
-            'publisher' => $this->faker->company(),
+            'publication_year' => $this->faker->year(),
             // 'user_id' => $this->faker->numberBetween(1, 3),
+            'publisher_id' => BookPublisher::factory(),
             'category_id' => $this->faker->numberBetween(1, 3),
             'jenis' => 'hardfile',
             'pdf_path' => null,

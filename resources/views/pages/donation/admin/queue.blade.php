@@ -8,9 +8,10 @@
             <thead>
                 <tr>
                 <th scope="col">No</th>
-                <th scope="col">Title</th>
+                <th scope="col">Judul Buku</th>
                 <th scope="col">Author</th>
                 <th scope="col">Kategori</th>
+                <th scope="col">Donatur</th>
                 <th scope="col">Cover</th>
                 <th scope="col">Action</th>
                 </tr>
@@ -22,11 +23,12 @@
                 <td>{{ $donation->book->title }}</td>
                 <td>{{ $donation->book->author }}</td>
                 <td>{{ $donation->book->category->name }}</td>
+                <td>{{ $donation->user->name}}</td>
                 <td>
                     @unless ($donation->book->image_path === null)
                         <img src="{{ asset('storage/cover_images/' . $donation->book->image_path) }}" alt="{{ $donation->book->title }}" width="100">
                     @else
-                        <img src="{{ asset('images/icons8-no-image-100.png') }}" alt="No Image" width="100">
+                        <img src="https://via.placeholder.com/640x480.png/F6F5F2?text=NoImageAvailable" alt="No Image" width="100">
                     @endunless
                 </td>
                 

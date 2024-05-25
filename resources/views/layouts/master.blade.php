@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My App</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    {{-- for dropdown searching option --}}
+    <!-- Include Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- Include Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
     <div id="app">
@@ -25,40 +31,82 @@
                                     Books
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('proposal.list') }}">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="proposalDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Proposal
                                 </a>
+                                <ul class="dropdown-menu" aria-labelledby="proposalDropdown">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('proposal.list') }}">
+                                            Proposal
+                                        </a>
+                                    </li>
+                                    @role('admin')
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('proposal.queue') }}">
+                                            Proposal Queue
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('proposal.active') }}">
+                                            Proposal Aktif
+                                        </a>
+                                    </li>
+                                    @endrole
+                                </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('proposal.queue') }}">
-                                    Proposal Queue
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('proposal.active') }}">
-                                    Proposal Aktif
-                                </a>
-                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
                                     Users
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('donation.list') }}">
-                                    Donations
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="donasiDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Donasi
                                 </a>
+                                <ul class="dropdown-menu" aria-labelledby="donasiDropdown">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('donation.list') }}">
+                                            Riwayat Donasi
+                                        </a>
+                                    </li>
+                                    @role('admin')
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('donation.queue') }}">
+                                            Butuh Persetujuan
+                                        </a>
+                                    </li>
+                                    @endrole
+                                </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('donation.queue') }}">
-                                    Donations Queue
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="peminjamanDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Peminjaman
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    Loans
-                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="peminjamanDropdown">
+                                    @role('dosen')
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('loan.list') }}">
+                                            Riwayat Peminjaman
+                                        </a>
+                                    </li>
+                                    @endrole
+                                    @role('admin')
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('loan.queue') }}">
+                                            Butuh Persetujuan 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('loan.active') }}">
+                                            Dalam Peminjaman
+                                        </a>
+                                    </li>
+                                    @endrole
+                                </ul>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('logout') }}"
@@ -82,9 +130,7 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     @yield('pagescripts')
 </body>
 </html>

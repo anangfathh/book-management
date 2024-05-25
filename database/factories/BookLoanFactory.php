@@ -25,11 +25,12 @@ class BookLoanFactory extends Factory
     public function definition()
     {
         return [
-            'book_id' => $this->faker->numberBetween(1, 10),
-            'user_id' => $this->faker->numberBetween(1, 3),
+            'book_id' => Book::all()->random()->id,
+            'user_id' => User::all()->random()->id,
             'loan_date' => Carbon::now(),
             'deadline_date' => $this->faker->dateTimeBetween('+1 week', '+4 weeks')->format('Y-m-d'),
             'return_date' => null,
+            'jumlah' => 1,
             'borrowed_status' => $this->faker->randomElement(['borrowed', 'returned']),
         ];
     }

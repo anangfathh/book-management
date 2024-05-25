@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('author');
-            $table->string('publisher');
+            $table->string('publication_year');
             $table->integer('jumlah')->default(1);
+            $table->foreignId('publisher_id')->references('id')->on('book_publishers')->onDelete('cascade')->onUpdate('cascade');
             // $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('category_id')->references('id')->on('book_categories')->onDelete('cascade')->onUpdate('cascade');
             $table->enum('jenis', ['softfile', 'hardfile']);

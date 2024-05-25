@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\BookDonation;
 use App\Models\Book;
 use App\Models\BookCategory;
+use App\Models\BookPublisher;
 use Illuminate\Support\Facades\Auth;
 
 class BookDonationController extends Controller
@@ -17,7 +18,11 @@ class BookDonationController extends Controller
      */
     public function index()
     {
-        $bookDonations = BookDonation::where('user_id', Auth::user()->id)->with('user', 'book')->get();
+        if (Auth::user()->role === 'admin') {
+            $bookDonations = BookDonation::all();
+        } else {
+            $bookDonations = BookDonation::where('user_id', Auth::user()->id)->with('user', 'book')->get();
+        }
         return view('pages.donation.index', compact('bookDonations'));
     }
 
@@ -29,7 +34,8 @@ class BookDonationController extends Controller
     public function create()
     {
         $categories = BookCategory::all();
-        return view('pages.donation.create', compact('categories'));
+        $publishers = BookPublisher::all();
+        return view('pages.donation.create', compact('categories', 'publishers'));
     }
 
     /**
@@ -43,7 +49,7 @@ class BookDonationController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'author' => 'required|max:255',
-            'publisher' => 'required|max:255',
+            'publisher_id' => 'required',
             'category_id' => 'required',
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'pdf_path' => 'nullable|file|mimes:pdf|max:102400'
@@ -73,9 +79,20 @@ class BookDonationController extends Controller
             $book = new Book;
             $book->title = $request->title;
             $book->author = $request->author;
-            $book->publisher = $request->publisher;
+            $book->publication_year = $request->publication_year;
             $book->category_id = $request->category_id;
             $book->jenis = $request->jenis;
+
+            if ($request->publisher_id === 'more') {
+                $publisher = new BookPublisher();
+                $publisher->name = $request->publisher_name;
+                $publisher->address = $request->publisher_address;
+                $publisher->phone = $request->publisher_phone;
+                $publisher->save();
+                $book->publisher_id = $publisher->id;
+            } else {
+                $book->publisher_id = $request->publisher_id;
+            }
 
             if ($request->hasFile('image_path')) {
                 $image_path = $request->file('image_path');
@@ -110,7 +127,7 @@ class BookDonationController extends Controller
     public function show($id)
     {
         $bookDonation = BookDonation::find($id);
-        return view('book-donations.show', compact('bookDonation'));
+        return view('pages.donation.show', compact('bookDonation'));
     }
 
     /**
@@ -123,7 +140,8 @@ class BookDonationController extends Controller
     {
         $bookDonation = BookDonation::find($id);
         $categories = BookCategory::all();
-        return view('pages.donation.edit', compact('bookDonation', 'categories'));
+        $publishers = BookPublisher::all();
+        return view('pages.donation.edit', compact('bookDonation', 'categories', 'publishers'));
     }
 
     /**
@@ -194,6 +212,12 @@ class BookDonationController extends Controller
     {
         $bookDonations = BookDonation::where('status', 'pending')->get();
         return view('pages.donation.admin.queue', compact('bookDonations'));
+    }
+
+    public function donationHistory()
+    {
+        $bookDonations = BookDonation::all();
+        return view('pages.donation.admin.riwayat', compact('bookDonations'));
     }
 
     public function donationValidation($id, Request $request)

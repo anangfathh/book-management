@@ -3,7 +3,9 @@
 @section('content')
     <h1>List books</h1>
     <div class="container">
-        <a href="{{ route('books.create') }}" class="btn btn-primary mb-3">Create Book</a>
+        @role('admin')
+        <a href="{{ route('book.make') }}" class="btn btn-primary mb-3">Create Book</a>
+        @endrole
         <table class="table">
             <thead>
                 <tr>
@@ -30,16 +32,23 @@
                     @endunless
                 </td>
                 <td>
-                    <a href="{{ route('books.show', $book->id) }}" class="btn btn-primary btn-sm">View</a>
-                    <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                    @if ($book->jenis == 'softfile')
-                        <a href="{{ route('books.download', $book->id) }}" class="btn btn-primary">Download PDF</a>
+                    <a href="{{ route('books.show', $book->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
+                    
+                    @if ($book->jenis == 'hardfile')
+                    @role('dosen')
+                    <a href="{{ route('loan.make', $book->id) }}" class="btn btn-info btn-sm">Borrow</a>
+                    @endrole
+                    @else
+                    <a href="{{ route('books.download', $book->id) }}" class="btn btn-primary"><i class="bi bi-cloud-arrow-down"></i></a>
                     @endif
+                    @role('admin')
+                    <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>
                     <form id="deleteForm{{ $book->id }}" action="{{ route('books.destroy', $book->id) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
-                        <button type="button" class="btn btn-danger btn-sm delete-book">Delete</button>
+                        <button type="button" class="btn btn-danger btn-sm delete-book"><i class="bi bi-trash"></i></button>
                     </form>
+                    @endrole
                 </td>
                 </tr>
                 @endforeach

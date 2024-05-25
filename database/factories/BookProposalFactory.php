@@ -2,8 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\BookProposal;
+use App\Models\BookCategory;
 use App\Models\User;
+use App\Models\BookProposal;
+use App\Models\BookPublisher;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BookProposalFactory extends Factory
@@ -23,10 +25,11 @@ class BookProposalFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => $this->faker->numberBetween(1, 3),
-            'category_id' => $this->faker->numberBetween(1, 3),
+            'user_id' => User::all()->random()->id,
+            'category_id' => BookCategory::all()->random()->id,
+            'publisher_id' => BookPublisher::factory(),
+            'publication_year' => $this->faker->year(),
             'book_title' => $this->faker->sentence(),
-            'publisher' => $this->faker->company(),
             'book_author' => $this->faker->name(),
             'book_cover_path' => null,
             'book_description' => $this->faker->paragraph(),

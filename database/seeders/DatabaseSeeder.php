@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'mahasiswa@example.com',
             'password' => bcrypt('password'),
             'role' => 'mahasiswa',
+            'nim' => 'I0321084'
         ]);
         User::factory()->create([
             'name' => 'Admin',
@@ -38,6 +39,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'dosen@example.com',
             'password' => bcrypt('password'),
             'role' => 'dosen',
+            'nidn' => '1234567890',
+            'nip' => '3189632967247'
         ]);
 
         BookCategory::factory()->create([

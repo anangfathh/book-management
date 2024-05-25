@@ -23,9 +23,43 @@
     </div>
 
     <div class="form-group">
-        <label for="publisher">Publisher</label>
-        <input type="text" name="publisher" id="publisher" class="form-control @error('publisher') is-invalid @enderror" value="{{ old('publisher') }}" required>
-        @error('publisher')
+        <label for="publication_year">Publication Year</label>
+        <input type="text" name="publication_year" id="publication_year" class="form-control @error('publication_year') is-invalid @enderror" value="{{ old('publication_year') }}" required>
+        @error('publication_year')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="form-group">
+        <label for="publisher_id">Publisher</label>
+        <select name="publisher_id" id="searchable-dropdown" class="form-control @error('publisher_id') is-invalid @enderror" required>
+            <option value="" selected disabled>Not selected</option>
+            @foreach ($publishers as $publisher)
+                <option value="{{ $publisher->id }}" {{ old('publisher_id') == $publisher->id ? 'selected' : '' }}>{{ $publisher->name }}</option>
+            @endforeach
+            <option value="more">Add Manually</option>
+        </select>
+        @error('publisher_id')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div id="custom-option-form" class="form-group" style="display: none;">
+        <label for="custom-option-name">Publisher Name</label>
+        <input type="text" name="publisher_name" id="custom-option-name" class="form-control @error('publisher_name') is-invalid @enderror">
+        @error('publisher_name')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+
+        <label for="custom-option-address">Publisher Address</label>
+        <input type="text" name="publisher_address" id="custom-option-address" class="form-control @error('publisher_address') is-invalid @enderror">
+        @error('publisher_address')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+
+        <label for="custom-option-phone">Publisher Phone</label>
+        <input type="text" name="publisher_phone" id="custom-option-phone" class="form-control @error('publisher_phone') is-invalid @enderror">
+        @error('publisher_phone')
             <div class="invalid-feedback">{{ $message }}</div>
         @enderror
     </div>
@@ -92,12 +126,19 @@
 
 @section('pagescripts')
 <script>
-    document.getElementById('jenis').addEventListener('change', function() {
-        if (this.value === 'softfile') {
-            document.getElementById('pdf-path-field').style.display = 'block';
-        } else {
-            document.getElementById('pdf-path-field').style.display = 'none';
-        }
-    });
+    $(document).ready(function() {
+                $('#searchable-dropdown').select2({
+                    placeholder: "Select a state",
+                    allowClear: true
+                });
+                
+        $('#searchable-dropdown').on('change', function() {
+            if (this.value === 'more') {
+                $('#custom-option-form').show();
+            } else {
+                $('#custom-option-form').hide();
+            }
+        });
+            });
 </script>
 @endsection
