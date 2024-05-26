@@ -35,7 +35,7 @@ class BookProposalFactory extends Factory
             'book_description' => $this->faker->paragraph(),
             'book_price' => $this->faker->randomFloat(2, 10, 100),
             'book_type' => $this->faker->randomElement(['softfile', 'hardfile']),
-            'status' => $this->faker->randomElement(['pending', 'approved', 'rejected', 'done']),
+            'status' => $this->faker->randomElement(['pending', 'approved', 'rejected', 'closed']),
         ];
     }
 }
