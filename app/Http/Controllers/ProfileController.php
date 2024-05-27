@@ -69,9 +69,15 @@ class ProfileController extends Controller
         $lecturers = User::where('role', 'dosen')->get();
         return view('pages.user.dosen', ['lecturers' => $lecturers]);
     }
-    public function getAlumnees()
+    public function getAlumni()
     {
         $alumni = User::where('role', 'alumni')->get();
         return view('pages.user.alumni', ['alumni' => $alumni]);
+    }
+
+    public function deleteUser(User $user)
+    {
+        $user->delete();
+        return redirect()->back()->with('status', 'User deleted successfully');
     }
 }

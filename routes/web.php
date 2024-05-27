@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookLoanController;
 use App\Http\Controllers\BookDonationController;
 use App\Http\Controllers\BookProposalController;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
@@ -77,6 +78,12 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/users/mahasiswa', [ProfileController::class, 'getMahasiswa'])->name('mahasiswa.list');
+    Route::get('/users/dosen', [ProfileController::class, 'getDosen'])->name('dosen.list');
+    Route::get('/users/alumni', [ProfileController::class, 'getAlumni'])->name('alumni.list');
+
+    Route::delete('/users/{user}', [ProfileController::class, 'deleteUser'])->name('user.destroy');
 });
 
 require __DIR__ . '/auth.php';
