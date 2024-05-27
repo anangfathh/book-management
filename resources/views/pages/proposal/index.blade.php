@@ -67,23 +67,24 @@
                                     All <span class="text-slate-400">(4251)</span>
                                 </button>
                             </li>
-                            <li class="me-2" role="presentation">
-                                <button
-                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="published-tab" data-fc-target="#published" type="button" role="tab"
-                                    aria-controls="published" aria-selected="false">
-                                    Active <span class="text-slate-400">(3255)</span>
-                                </button>
-                            </li>
-                            <li class="me-2" role="presentation">
-                                <button
-                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="drafts-tab" data-fc-target="#drafts" type="button" role="tab"
-                                    aria-controls="drafts" aria-selected="false">
-                                    Queue <span class="text-slate-400">(25)</span>
-                                </button>
-                            </li>
-
+                            @role('admin')
+                                <li class="me-2" role="presentation">
+                                    <button
+                                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        id="published-tab" data-fc-target="#published" type="button" role="tab"
+                                        aria-controls="published" aria-selected="false">
+                                        Proposal Terproses <span class="text-slate-400">(3255)</span>
+                                    </button>
+                                </li>
+                                <li class="me-2" role="presentation">
+                                    <button
+                                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        id="drafts-tab" data-fc-target="#drafts" type="button" role="tab"
+                                        aria-controls="drafts" aria-selected="false">
+                                        Antrean Proposal <span class="text-slate-400">(25)</span>
+                                    </button>
+                                </li>
+                            @endrole
                         </ul>
                     </div>
                     <div class="flex flex-wrap gap-4 mb-3">

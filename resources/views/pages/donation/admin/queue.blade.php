@@ -112,7 +112,7 @@
                                 <td>
                                     @unless ($donation->book->image_path === null)
                                         <img src="{{ asset('storage/cover_images/' . $donation->book->image_path) }}"
-                                            alt="{{ $book->title }}" width="100">
+                                            alt="{{ $donation->book->title }}" width="100">
                                     @else
                                         <img src="https://via.placeholder.com/640x480.png/F6F5F2?text=NoImageAvailable"
                                             alt="No Image" width="100">

@@ -142,6 +142,7 @@
                                                 @foreach ($bookLoans as $index => $loan)
                                                     <tr>
                                                         <th scope="row">{{ $index + 1 }}</th>
+
                                                         <td
                                                             class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                             {{ $loan->book->title }}</td>

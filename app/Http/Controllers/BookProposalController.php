@@ -86,8 +86,9 @@ class BookProposalController extends Controller
     {
         $users = User::all();
         $bookCategories = BookCategory::all();
+        $publishers = BookPublisher::all();
 
-        return view('pages.proposal.edit', compact('bookProposal', 'users', 'bookCategories'));
+        return view('pages.proposal.edit', compact('bookProposal', 'users', 'bookCategories', 'publishers'));
     }
 
     public function update(Request $request, BookProposal $bookProposal)
@@ -106,7 +107,10 @@ class BookProposalController extends Controller
         $bookProposal->user_id = Auth::user()->id;
         $bookProposal->category_id = $request->category_id;
         $bookProposal->book_title = $request->book_title;
-        $bookProposal->publisher = $request->publisher;
+        $bookProposal->publisher_id = $request->publisher;
+
+
+
         $bookProposal->book_author = $request->book_author;
         if ($request->hasFile('book_cover_path')) {
             if ($bookProposal->book_cover_path && Storage::exists($bookProposal->book_cover_path)) {
@@ -157,8 +161,10 @@ class BookProposalController extends Controller
 
     public function activeProposal()
     {
-        $bookProposals = BookProposal::where('status', 'approved')->get();
-        return view('pages.proposal.admin.active', compact('bookProposals'));
+        $activeProposals = BookProposal::where('status', 'approved')->get();
+        $bookProposals = BookProposal::with('user', 'category')->get();
+        $queueProposals = BookProposal::where('status', 'pending')->get();
+        return view('pages.proposal.index', compact('activeProposals', 'bookProposals', 'queueProposals'));
     }
 
     public function closeProposal($id)

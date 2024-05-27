@@ -77,17 +77,19 @@
                                 <button class="inline-block p-4 rounded-t-lg border-b-2 active" id="all-tab"
                                     data-fc-target="#all" type="button" role="tab" aria-controls="all"
                                     aria-selected="false">
-                                    All <span class="text-slate-400">(4251)</span>
+                                    Book List <span class="text-slate-400">(4251)</span>
                                 </button>
                             </li>
                         </ul>
                     </div>
                     <div class="flex flex-wrap gap-4 mb-3">
                         <div class="mb-2 w-44">
-                            <a href="{{ route('book.make') }}"
-                                class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white text-md font-medium py-2 px-4 rounded">
-                                Add product
-                            </a>
+                            @role('admin')
+                                <a href="{{ route('book.make') }}"
+                                    class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white text-md font-medium py-2 px-4 rounded">
+                                    Add Book
+                                </a>
+                            @endrole
                         </div>
 
 

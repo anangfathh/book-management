@@ -105,7 +105,7 @@ class BookLoanController extends Controller
     public function loanQueue()
     {
         $bookLoans = BookLoan::where('borrowed_status', 'pending')->get();
-  $activeLoans = BookLoan::where('borrowed_status', 'borrowed')->get();
+        $activeLoans = BookLoan::where('borrowed_status', 'borrowed')->get();
         return view('pages.loan.admin.index', compact('bookLoans', 'activeLoans'));
     }
 

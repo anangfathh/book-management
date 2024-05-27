@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="xl:w-full">
+    {{-- <div class="xl:w-full">
         <div class="flex flex-wrap">
             <div class="flex items-center py-4 w-full">
                 <div class="w-full">
@@ -606,5 +606,5 @@
                             </div><!--end card-body-->
                         </div> <!--end card-->
                     </div><!--end col-->
-                </div><!--end inner-grid-->
+                </div><!--end inner-grid--> --}}
 @endsection

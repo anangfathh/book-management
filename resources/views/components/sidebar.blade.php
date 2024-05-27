@@ -27,33 +27,39 @@
                                  class="w-5 h-5 text-center text-slate-800 dark:text-slate-400 me-2 group-data-[sidebar=dark]:text-slate-400 group-data-[sidebar=brand]:text-slate-400"></span>
                              <span>Dashboard</span>
                          </a>
-
+                         <div
+                             class="border-b border-dashed dark:border-slate-700/40 my-3 group-data-[sidebar=dark]:border-slate-700/40 group-data-[sidebar=brand]:border-slate-700/40">
+                         </div>
+                         <div
+                             class="text-[9px] text-slate-600 dark:text-slate-500 group-data-[sidebar=dark]:text-slate-500 group-data-[sidebar=brand]:text-slate-400">
+                             N<span>avigasi Menu </span>
+                         </div>
                          <a href="{{ route('books.list') }}"
                              class="nav-link hover:bg-transparent hover:text-black  rounded-md dark:hover:text-slate-200   flex items-center  decoration-0 px-3 py-3 cursor-pointer group-data-[sidebar=dark]:hover:text-slate-200 group-data-[sidebar=brand]:hover:text-slate-200 ">
-                             <span data-lucide="home"
+                             <span data-lucide="book-copy"
                                  class="w-5 h-5 text-center text-slate-800 dark:text-slate-400 me-2 group-data-[sidebar=dark]:text-slate-400 group-data-[sidebar=brand]:text-slate-400"></span>
                              <span>Book</span>
                          </a>
 
                          <a href="#"
                              class="nav-link hover:bg-transparent hover:text-black  rounded-md dark:hover:text-slate-200   flex items-center  decoration-0 px-3 py-3 cursor-pointer group-data-[sidebar=dark]:hover:text-slate-200 group-data-[sidebar=brand]:hover:text-slate-200 ">
-                             <span data-lucide="home"
+                             <span data-lucide="user"
                                  class="w-5 h-5 text-center text-slate-800 dark:text-slate-400 me-2 group-data-[sidebar=dark]:text-slate-400 group-data-[sidebar=brand]:text-slate-400"></span>
                              <span>User</span>
                          </a>
 
                          {{-- Proposal --}}
-                         <div data-fc-type="collapse" data-fc-parent="parent-accordion">
+                         {{-- <div data-fc-type="collapse" data-fc-parent="parent-accordion">
                              <a href="#"
                                  class="nav-link hover:bg-transparent hover:text-black  rounded-md dark:hover:text-slate-200   flex items-center  decoration-0 px-3 py-3 cursor-pointer group-data-[sidebar=dark]:hover:text-slate-200 group-data-[sidebar=brand]:hover:text-slate-200">
-                                 <span data-lucide="grid"
+                                 <span data-lucide="folder-input"
                                      class="w-5 h-5 text-center text-slate-800 me-2 dark:text-slate-400 group-data-[sidebar=dark]:text-slate-400 group-data-[sidebar=brand]:text-slate-400"></span>
                                  <span>Proposal</span>
                                  <i
                                      class="icofont-thin-down fc-collapse-open:rotate-180 ms-auto inline-block text-[14px] transform transition-transform duration-300 text-slate-800 dark:text-slate-400 group-data-[sidebar=dark]:text-slate-400 group-data-[sidebar=brand]:text-slate-400"></i>
                              </a>
-                         </div>
-                         <div class="hidden  overflow-hidden">
+                         </div> --}}
+                         {{-- <div class="hidden  overflow-hidden">
                              <ul class="nav flex-col flex flex-wrap ps-0 mb-0 ms-2" id="apps-accordion"
                                  data-fc-type="accordion">
 
@@ -85,14 +91,22 @@
                                  @endrole
 
                              </ul>
-                         </div>
+                         </div> --}}
+
+
+                         <a href="{{ route('proposal.list') }}"
+                             class="nav-link hover:bg-transparent hover:text-black  rounded-md dark:hover:text-slate-200   flex items-center  decoration-0 px-3 py-3 cursor-pointer group-data-[sidebar=dark]:hover:text-slate-200 group-data-[sidebar=brand]:hover:text-slate-200 ">
+                             <span data-lucide="folder-input"
+                                 class="w-5 h-5 text-center text-slate-800 dark:text-slate-400 me-2 group-data-[sidebar=dark]:text-slate-400 group-data-[sidebar=brand]:text-slate-400"></span>
+                             <span>User</span>
+                         </a>
                          {{-- End  --}}
 
                          {{-- Donasi --}}
-                         <div data-fc-type="collapse" data-fc-parent="parent-accordion">
+                         {{-- <div data-fc-type="collapse" data-fc-parent="parent-accordion">
                              <a href="#"
                                  class="nav-link hover:bg-transparent hover:text-black  rounded-md dark:hover:text-slate-200   flex items-center  decoration-0 px-3 py-3 cursor-pointer group-data-[sidebar=dark]:hover:text-slate-200 group-data-[sidebar=brand]:hover:text-slate-200">
-                                 <span data-lucide="grid"
+                                 <span data-lucide="book-up"
                                      class="w-5 h-5 text-center text-slate-800 me-2 dark:text-slate-400 group-data-[sidebar=dark]:text-slate-400 group-data-[sidebar=brand]:text-slate-400"></span>
                                  <span>Donasi</span>
                                  <i
@@ -122,14 +136,21 @@
                                      </li>
                                  @endrole
                              </ul>
-                         </div>
+                         </div> --}}
+
+                         <a href="{{ route('donation.list') }}"
+                             class="nav-link hover:bg-transparent hover:text-black  rounded-md dark:hover:text-slate-200   flex items-center  decoration-0 px-3 py-3 cursor-pointer group-data-[sidebar=dark]:hover:text-slate-200 group-data-[sidebar=brand]:hover:text-slate-200 ">
+                             <span data-lucide="book-up"
+                                 class="w-5 h-5 text-center text-slate-800 dark:text-slate-400 me-2 group-data-[sidebar=dark]:text-slate-400 group-data-[sidebar=brand]:text-slate-400"></span>
+                             <span>User</span>
+                         </a>
                          {{-- End  --}}
 
                          {{-- Peminjaman --}}
-                         <div data-fc-type="collapse" data-fc-parent="parent-accordion">
+                         {{-- <div data-fc-type="collapse" data-fc-parent="parent-accordion">
                              <a href="#"
                                  class="nav-link hover:bg-transparent hover:text-black  rounded-md dark:hover:text-slate-200   flex items-center  decoration-0 px-3 py-3 cursor-pointer group-data-[sidebar=dark]:hover:text-slate-200 group-data-[sidebar=brand]:hover:text-slate-200">
-                                 <span data-lucide="grid"
+                                 <span data-lucide="book-open-check"
                                      class="w-5 h-5 text-center text-slate-800 me-2 dark:text-slate-400 group-data-[sidebar=dark]:text-slate-400 group-data-[sidebar=brand]:text-slate-400"></span>
                                  <span>Peminjaman</span>
                                  <i
@@ -169,14 +190,21 @@
                                      </li>
                                  @endrole
                              </ul>
-                         </div>
+                         </div> --}}
+
+                         <a href="{{ route('donation.list') }}"
+                             class="nav-link hover:bg-transparent hover:text-black  rounded-md dark:hover:text-slate-200   flex items-center  decoration-0 px-3 py-3 cursor-pointer group-data-[sidebar=dark]:hover:text-slate-200 group-data-[sidebar=brand]:hover:text-slate-200 ">
+                             <span data-lucide="book-open-check"
+                                 class="w-5 h-5 text-center text-slate-800 dark:text-slate-400 me-2 group-data-[sidebar=dark]:text-slate-400 group-data-[sidebar=brand]:text-slate-400"></span>
+                             <span>User</span>
+                         </a>
                          {{-- End  --}}
 
                          <a href="{{ route('logout') }}"
                              onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();"
                              class="nav-link hover:bg-transparent hover:text-black  rounded-md dark:hover:text-slate-200   flex items-center  decoration-0 px-3 py-3 cursor-pointer group-data-[sidebar=dark]:hover:text-slate-200 group-data-[sidebar=brand]:hover:text-slate-200 ">
-                             <span data-lucide="home"
+                             <span data-lucide="power-off"
                                  class="w-5 h-5 text-center text-slate-800 dark:text-slate-400 me-2 group-data-[sidebar=dark]:text-slate-400 group-data-[sidebar=brand]:text-slate-400"></span>
                              <span>Logout</span>
                          </a>

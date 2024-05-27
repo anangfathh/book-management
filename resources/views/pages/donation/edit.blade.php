@@ -16,8 +16,9 @@
         @method('PUT')
 
         <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
+            <label class="font-medium text-sm text-slate-600 dark:text-slate-400" for="title">Title</label>
+            <input type="text" name="title" id="title"
+                class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700 form-control @error('title') is-invalid @enderror"
                 value="{{ $bookDonation->book->title }}" required>
             @error('title')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -91,8 +92,9 @@
 
 
         <div class="form-group">
-            <label for="category_id">Category</label>
-            <select name="category_id" id="category_id" class="form-control @error('category_id') is-invalid @enderror"
+            <label class="font-medium text-sm text-slate-600 dark:text-slate-400" for="category_id">Category</label>
+            <select name="category_id" id="category_id"
+                class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700 form-control @error('category_id') is-invalid @enderror"
                 required>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
