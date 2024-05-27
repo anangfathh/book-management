@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,5 +57,21 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function getMahasiswa()
+    {
+        $students = User::where('role', 'mahasiswa')->get();
+        return view('pages.user.mahasiswa', ['students' => $students]);
+    }
+    public function getDosen()
+    {
+        $lecturers = User::where('role', 'dosen')->get();
+        return view('pages.user.dosen', ['lecturers' => $lecturers]);
+    }
+    public function getAlumnees()
+    {
+        $alumni = User::where('role', 'alumni')->get();
+        return view('pages.user.alumni', ['alumni' => $alumni]);
     }
 }

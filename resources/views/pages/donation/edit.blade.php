@@ -3,6 +3,15 @@
 @section('content')
 <h1>Edit Donasi</h1>
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <form action="{{ route('donation.update', $bookDonation->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
@@ -73,6 +82,14 @@
             @endforeach
         </select>
         @error('category_id')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="form-group">
+        <label for="jumlah">Jumlah</label>
+        <input type="number" name="jumlah" id="jumlah" class="form-control @error('jumlah') is-invalid @enderror" value="{{ $bookDonation->jumlah }}" required>
+        @error('jumlah')
             <div class="invalid-feedback">{{ $message }}</div>
         @enderror
     </div>
