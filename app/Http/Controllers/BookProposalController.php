@@ -16,7 +16,11 @@ class BookProposalController extends Controller
     {
         $bookProposals = BookProposal::with('user', 'category')->get();
 
-        return view('pages.proposal.index', compact('bookProposals'));
+        $queueProposals = BookProposal::where('status', 'pending')->get();
+
+        $activeProposals = BookProposal::where('status', 'approved')->get();
+
+        return view('pages.proposal.index', compact('bookProposals', 'queueProposals', 'activeProposals'));
     }
 
     public function create()
@@ -133,9 +137,13 @@ class BookProposalController extends Controller
 
     public function proposalQueue()
     {
-        $bookProposals = BookProposal::where('status', 'pending')->get();
+        $bookProposals = BookProposal::with('user', 'category')->get();
 
-        return view('pages.proposal.admin.queue', compact('bookProposals'));
+        $queueProposals = BookProposal::where('status', 'pending')->get();
+
+        $activeProposals = BookProposal::where('status', 'approved')->get();
+
+        return view('pages.proposal.index', compact('bookProposals', 'queueProposals', 'activeProposals'));
     }
 
     public function proposalValidation($id, Request $request)

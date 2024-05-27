@@ -17,8 +17,10 @@ class BookLoanController extends Controller
     public function index()
     {
         $bookLoans = BookLoan::with(['book', 'user'])->get();
+        $activeLoans = BookLoan::where('borrowed_status', 'borrowed')->get();
 
-        return view('pages.loan.index', compact('bookLoans'));
+
+        return view('pages.loan.index', compact('bookLoans', 'activeLoans'));
     }
 
     /**
@@ -103,8 +105,8 @@ class BookLoanController extends Controller
     public function loanQueue()
     {
         $bookLoans = BookLoan::where('borrowed_status', 'pending')->get();
-
-        return view('pages.loan.admin.index', compact('bookLoans'));
+  $activeLoans = BookLoan::where('borrowed_status', 'borrowed')->get();
+        return view('pages.loan.admin.index', compact('bookLoans', 'activeLoans'));
     }
 
     public function loanValidation($id, Request $request)
@@ -118,18 +120,27 @@ class BookLoanController extends Controller
 
     public function loanActive()
     {
-        $bookLoans = BookLoan::where('borrowed_status', 'borrowed')->get();
+        $bookLoans = BookLoan::with(['book', 'user'])->get();
+        $activeLoans = BookLoan::where('borrowed_status', 'borrowed')->get();
 
-        return view('pages.loan.admin.active', compact('bookLoans'));
+        return view('pages.loan.index', compact('activeLoans', 'bookLoans'));
     }
 
     public function loanReturn($id)
     {
-        $bookLoan = BookLoan::find($id);
-        $bookLoan->borrowed_status = 'returned';
-        $bookLoan->return_date = now();
-        $bookLoan->save();
+        $bookLoans = BookLoan::with(['book', 'user'])->get();
+        $activeLoans = BookLoan::where('borrowed_status', 'borrowed')->get();
 
-        return redirect()->route('loan.active')->with('success', 'Book loan returned succesfully');
+        $activeLoans = BookLoan::find($id);
+        $activeLoans->borrowed_status = 'returned';
+        $activeLoans->return_date = now();
+        $activeLoans->save();
+
+        return redirect()->route('loan.active')
+                 ->with([
+                     'success' => 'Book loan returned successfully',
+                     'activeLoans' => $activeLoans,
+                     'bookLoans' => $bookLoans
+                 ]);
     }
 }
