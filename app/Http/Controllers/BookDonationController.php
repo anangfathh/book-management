@@ -157,7 +157,8 @@ class BookDonationController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'author' => 'required|max:255',
-            'publisher' => 'required|max:255',
+            'publisher_id' => 'required',
+            'publication_year' => 'required',
             'category_id' => 'required',
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'pdf_path' => 'nullable|file|mimes:pdf|max:102400'
@@ -166,9 +167,21 @@ class BookDonationController extends Controller
         $book = Book::find($bookDonation->book->id);
         $book->title = $request->title;
         $book->author = $request->author;
-        $book->publisher = $request->publisher;
+        $book->publication_year = $request->publication_year;
         $book->category_id = $request->category_id;
         $book->jenis = $request->jenis;
+
+        if ($request->publisher_id === 'more') {
+            $publisher = new BookPublisher();
+            $publisher->name = $request->publisher_name;
+            $publisher->address = $request->publisher_address;
+            $publisher->phone = $request->publisher_phone;
+            $publisher->save();
+            $book->publisher_id = $publisher->id;
+        } else {
+            $book->publisher_id = $request->publisher_id;
+        }
+
         // $book->user_id = Auth::user()->id;
 
         if ($request->hasFile('image_path')) {

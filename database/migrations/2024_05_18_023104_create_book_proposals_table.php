@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('book_description');
             $table->string('book_price')->nullable();
             $table->enum('book_type', ['softfile', 'hardfile']);
-            $table->enum('status', ['pending', 'approved', 'rejected', 'done'])->default('pending');
+            $table->enum('status', ['pending', 'approved', 'rejected', 'closed'])->default('pending');
             $table->timestamps();
         });
     }
