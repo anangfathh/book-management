@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookLoanController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BookDonationController;
 use App\Http\Controllers\BookProposalController;
 
@@ -12,9 +13,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// });
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified', 'role:dosen'])->group(function () {
     Route::get('books/{book}/loan', [BookLoanController::class, 'create'])->name('loan.make');

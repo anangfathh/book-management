@@ -47,7 +47,7 @@
     <meta content="" name="Mannatthemes" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" />
 
     <!-- Css -->
     <link href="{{ asset('assets/libs/prismjs/themes/prism-twilight.min.css') }}" type="text/css" rel="stylesheet">
@@ -59,9 +59,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/tailwind.min.css') }}">
 
     {{-- form --}}
-    <link rel="stylesheet" href="{{ asset('assets/libs/filepond/filepond.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('assets/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/libs/uppy/uppy.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/libs/vanillajs-datepicker/css/datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/libs/mobius1-selectr/selectr.min.css') }}">
 
@@ -104,8 +102,9 @@
     <script src="{{ asset('assets/js/pages/datatable.init.js') }}"></script>
 
     {{-- form --}}
-    <script src="{{ asset('assets/libs/filepond/filepond.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/upload.init.js') }}"></script>
+    <script src="{{ asset('assets/libs/uppy/uppy.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/upload.init.js') }}"></script>
     <script src="{{ asset('assets/libs/vanillajs-datepicker/js/datepicker-full.min.js') }}"></script>
     <script src="{{ asset('assets/libs/mobius1-selectr/selectr.min.js') }}"></script>
     @yield('pagescripts')

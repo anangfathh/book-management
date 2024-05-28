@@ -109,7 +109,7 @@
                                                                     method="POST" class="d-inline">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button type="button"
+                                                                    <button type="submit"
                                                                         class="text-white bg-red-500 hover:bg-red-600  focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 mb-2">
                                                                         <i data-lucide="trash"></i></button>
                                                                 </form>

@@ -72,7 +72,7 @@ class BookController extends Controller
         if ($request->hasFile('pdf_path')) {
             $pdf_path = $request->file('pdf_path');
             $filename = time() . '.' . $pdf_path->getClientOriginalExtension();
-            $pdf_path->storeAs('public/cover_images', $filename);
+            $pdf_path->storeAs('public/pdf_files', $filename);
             $book->pdf_path = $filename;
         }
 

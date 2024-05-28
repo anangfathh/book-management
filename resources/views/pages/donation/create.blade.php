@@ -5,24 +5,24 @@
         <form class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4 justify-between"
             action="{{ route('donation.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-3 xl:col-span-3">
-                <div class="w-full relative p-4">
-                    <label for="image_path" class="font-medium text-sm text-slate-600 dark:text-slate-400">Upload
-                        Image</label>
-                    <div class="w-full h-56 mx-auto  mb-4">
-                        <input type="file" name="image_path" id="image_path"
-                            class="form-control-file @error('image_path') is-invalid @enderror">
-                        @error('image_path')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                </div><!--end card-->
-            </div><!--end col-->
 
             <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 xl:col-span-6">
                 <div class="w-full relative mb-4">
                     <div class="flex-auto p-0 md:p-4">
+                        <div class="flex-auto py-4 ">
+                            <div class="d-grid">
+                                <p class="text-slate-400 mb-4">Click Upload Image Untuk Upload Gambar
+                                </p>
+                                <div hidden
+                                    class="preview-box block justify-center rounded overflow-hidden bg-slate-50 dark:bg-slate-900/20 p-4 mb-4">
+                                </div>
+                                <input type="file" id="input-file" name="image_path" accept="image/*"
+                                    onchange={handleChange()} hidden />
+                                <label
+                                    class="btn-upload px-3 py-2 lg:px-4 bg-blue-500 text-white text-sm font-semibold rounded hover:bg-blue-600 mt-4"
+                                    for="input-file">Upload Image</label>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="font-medium text-sm text-slate-600 dark:text-slate-400" for="title">Book
                                 Title</label>
