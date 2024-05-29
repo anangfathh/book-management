@@ -56,12 +56,31 @@
                                 </ul>
                             </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    Users
+                            @role('admin')
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    user
                                 </a>
+                                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('mahasiswa.list') }}">
+                                            Mahasiswa
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('dosen.list') }}">
+                                            Dosen
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('alumni.list') }}">
+                                            Alumni
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
-
+                            @endrole
+                            
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="donasiDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Donasi

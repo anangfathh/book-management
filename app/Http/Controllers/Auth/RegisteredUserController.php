@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Rules\ValidNim;
 
 class RegisteredUserController extends Controller
 {
@@ -32,7 +33,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'nim' => ['nullable', 'max:8'],
+            'nim' => ['required', new ValidNim],
             'nip' => ['nullable', 'max:18'],
             'nidn' => ['nullable', 'max:10'],
             'role' => ['required', 'in:mahasiswa,dosen,admin,alumni'],
