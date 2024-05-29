@@ -109,11 +109,13 @@
                         <div class="col-span-12 sm:col-span-6 self-center">
                             <ol class="list-none list-inside mb-3">
                                 <li class="mb-1 text-slate-700 dark:text-slate-400 text-sm"><i
-                                        class="icofont-ui-play me-2 text-brand-500"></i> Tablet</li>
+                                        class="icofont-ui-play me-2 text-brand-500"></i> Pending</li>
                                 <li class="mb-1 text-slate-700 dark:text-slate-400 text-sm"><i
-                                        class="icofont-ui-play me-2 text-yellow-400"></i> Desktop</li>
+                                        class="icofont-ui-play me-2 text-yellow-400"></i> Approved</li>
                                 <li class="mb-1 text-slate-700 dark:text-slate-400 text-sm"><i
-                                        class="icofont-ui-play me-2 text-[#13939c]"></i> Moble</li>
+                                        class="icofont-ui-play me-2 text-[#13939c]"></i> Rejected</li>
+                                <li class="mb-1 text-slate-700 dark:text-slate-400 text-sm"><i
+                                        class="icofont-ui-play me-2 text-[#4ac7ec]"></i> Closed</li>
                             </ol>
                             <button type="button"
                                 class="inline-block shadow-sm dark:shadow-slate-700/10 focus:outline-none text-slate-600 hover:bg-brand-500 hover:text-white bg-transparent border border-slate-300 dark:bg-transparent dark:text-slate-400 dark:hover:text-white dark:border-gray-700 dark:hover:bg-brand-500  text-sm font-medium py-1 px-3 rounded">View
@@ -123,7 +125,7 @@
                     <h6
                         class="bg-brand-400/5 shadow-sm dark:shadow-slate-700/10 border border-dashed dark:text-brand-300 border-brand dark:bg-slate-700/40 py-3 px-2 rounded-md  text-center text-brand-500 font-medium mt-3">
                         <i class="ti ti-calendar self-center text-lg mr-1"></i>
-                        01 January 2023 to 31 December 2024
+                        Grafik Status Proposal Sejauh Ini
                     </h6>
                 </div><!--end card-body-->
             </div><!--end card-->
@@ -132,7 +134,7 @@
             <div class="w-full relative mb-4">
                 <div class="border-b border-dashed border-slate-200 dark:border-slate-700 py-3 px-4 dark:text-slate-300/70">
                     <div class="flex-none md:flex">
-                        <h4 class="font-medium flex-1 self-center mb-2 md:mb-0 text-xxl">Sales Report</h4>
+                        <h4 class="font-medium flex-1 self-center mb-2 md:mb-0 text-xxl">Grafik Donasi Dan Proposal </h4>
                         <div class="dropdown inline-block">
                             <button data-fc-autoclose="both" data-fc-type="dropdown"
                                 class="dropdown-toggle px-3 py-1 text-xs font-medium text-gray-500 focus:outline-none bg-white rounded border border-gray-200 hover:bg-gray-50 hover:text-slate-800 focus:z-10 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
@@ -175,6 +177,7 @@
         </div><!--end col-->
 
 
+
     </div> <!--end grid-->
 
     <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4 mb-4">
@@ -186,4 +189,171 @@
         @endrole
 
     </div><!--end inner-grid-->
+
+
+@section('pagescripts')
+    <script>
+        // proposal chart
+        try {
+            var options = {
+                chart: {
+                    height: 205,
+                    type: 'donut',
+                },
+                plotOptions: {
+                    pie: {
+                        donut: {
+                            size: '85%'
+                        }
+                    }
+                },
+                dataLabels: {
+                    enabled: false,
+                },
+                stroke: {
+                    show: true,
+                    width: 2,
+                    colors: ['transparent']
+                },
+
+                series: <?= json_encode($proposalChartData) ?>,
+                legend: {
+                    show: false,
+                    position: 'bottom',
+                    horizontalAlign: 'center',
+                    verticalAlign: 'middle',
+                    floating: false,
+                    fontSize: '14px',
+                    offsetX: 0,
+                    offsetY: 5
+                },
+                labels: {{ Js::from($proposalChartLabel) }},
+                colors: ["#13939c", "#603dc3", "#fac639", "#4ac7ec"],
+
+                responsive: [{
+                    breakpoint: 600,
+                    options: {
+                        plotOptions: {
+                            donut: {
+                                customScale: 0.2
+                            }
+                        },
+                        chart: {
+                            height: 200
+                        },
+                        legend: {
+                            show: false
+                        },
+                    }
+                }],
+
+                tooltip: {
+                    y: {
+                        formatter: function(val) {
+                            return val
+                        }
+                    }
+                }
+            }
+
+            var chart = new ApexCharts(
+                document.querySelector("#email_report"),
+                options
+            );
+
+            chart.render();
+        } catch (err) {}
+
+        try {
+            var options = {
+                chart: {
+                    height: 350,
+                    type: "area",
+                    width: "100%",
+                    stacked: true,
+                    toolbar: {
+                        show: false,
+                        autoSelected: "zoom",
+                    },
+                    dropShadow: {
+                        enabled: true,
+                        top: 12,
+                        left: 0,
+                        bottom: 0,
+                        right: 0,
+                        blur: 2,
+                        color: "rgba(132, 145, 183, 0.3)",
+                        opacity: 0.35,
+                    },
+                },
+                colors: ["#1b1b22", "#fa6432"],
+                dataLabels: {
+                    enabled: false,
+                },
+                stroke: {
+                    curve: "straight",
+                    width: [2, 0.5],
+                    dashArray: [0, 3],
+                    lineCap: "round",
+                },
+                grid: {
+                    padding: {
+                        left: 0,
+                        right: 0,
+                    },
+                    strokeDashArray: 3,
+                },
+                markers: {
+                    size: 0,
+                    hover: {
+                        size: 0,
+                    },
+                },
+                series: [{
+                        name: "Donasi",
+                        data: <?= json_encode($donationChartData) ?>,
+                    },
+                    {
+                        name: "Proposal",
+                        data: <?= json_encode($proposalLineChart) ?>,
+                    },
+                ],
+
+                xaxis: {
+                    type: "month",
+                    categories: <?= json_encode($donationChartLabels) ?>,
+                    axisBorder: {
+                        show: true,
+                    },
+                    axisTicks: {
+                        show: true,
+                    },
+                },
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.4,
+                        opacityTo: 0.1,
+                        stops: [0, 90, 100],
+                    },
+                },
+
+                tooltip: {
+                    x: {
+                        format: "dd/MM/yy HH:mm",
+                    },
+                },
+                legend: {
+                    position: "top",
+                    horizontalAlign: "right",
+                },
+            };
+
+            var chart = new ApexCharts(document.querySelector("#crm-dash"), options);
+
+            chart.render();
+        } catch (err) {}
+    </script>
+@endsection
 @endsection

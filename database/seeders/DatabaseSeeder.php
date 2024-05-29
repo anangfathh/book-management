@@ -76,6 +76,7 @@ class DatabaseSeeder extends Seeder
             'book_id' => 4,
             'jumlah' => 2
         ]);
+
         BookLoan::factory(5)->create();
     }
 }

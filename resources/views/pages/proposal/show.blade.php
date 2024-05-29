@@ -14,7 +14,7 @@
                                 style="position: relative;">
 
                                 @unless ($bookProposal->book_cover_path === null)
-                                    <img src="{{ asset('storage/cover_images/' . $bookProposal->book_cover_path) }}"
+                                    <img src="{{ asset('storage/book_covers/' . $bookProposal->book_cover_path) }}"
                                         alt="{{ $bookProposal->book_title }}" style="width: 400px; height: 400px;"
                                         class="img-responsive">
                                 @else
@@ -28,8 +28,8 @@
                                 </div>
                                 <div class="js-image-zoom__zoomed-image"
                                     style="background-image: url(&quot;http://127.0.0.1:5501/assets/images/products/02.png&quot;); background-repeat: no-repeat; display: none; position: absolute; top: 0px; right: 0px; transform: translateX(100%); width: 400px; height: 400px; background-size: 800px 800px; background-position: 0px -52px;">
-                                    @unless ($bookProposal->image_path === null)
-                                        <img src="{{ asset('storage/cover_images/' . $bookProposal->image_path) }}"
+                                    @unless ($bookProposal->book_cover_path === null)
+                                        <img src="{{ asset('storage/book_covers/' . $bookProposal->book_cover_path) }}"
                                             alt="{{ $bookProposal->book_title }}" class="img-responsive">
                                     @else
                                         <img src="https://via.placeholder.com/640x480.png/F6F5F2?text=NoImageAvailable"

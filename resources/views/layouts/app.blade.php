@@ -94,6 +94,8 @@
     <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/analytics-index.init.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/libs/chart.js/chart.min.js') }}"></script>
+
     <!-- JAVASCRIPTS -->
 
     {{-- table --}}

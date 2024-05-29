@@ -9,9 +9,12 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BookDonationController;
 use App\Http\Controllers\BookProposalController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+
+Route::get('/', [DashboardController::class, 'welcome'])->name('welcome');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');

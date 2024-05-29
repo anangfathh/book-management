@@ -157,8 +157,8 @@
                                                             class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                             {{ $book->status }}</td>
                                                         <td>
-                                                            @unless ($book->image_path === null)
-                                                                <img src="{{ asset('storage/cover_images/' . $book->book_cover_path) }}"
+                                                            @unless ($book->book_cover_path === null)
+                                                                <img src="{{ asset('storage/book_covers/' . $book->book_cover_path) }}"
                                                                     alt="{{ $book->title }}" width="100">
                                                             @else
                                                                 <img src="https://via.placeholder.com/640x480.png/F6F5F2?text=NoImageAvailable"
