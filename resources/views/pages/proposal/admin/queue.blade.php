@@ -54,12 +54,11 @@
 
 
 
-<div class="hidden p-4 bg-gray-50 rounded-lg dark:bg-gray-800" id="drafts" role="tabpanel"
-    aria-labelledby="published-tab">
+<div class="hidden p-4 bg-gray-50 rounded-lg dark:bg-gray-800" id="drafts" role="tabpanel" aria-labelledby="drafts-tab">
     <div class="grid grid-cols-1 p-4">
         <div class="sm:-mx-6 lg:-mx-8">
             <div class="relative overflow-x-auto block w-full sm:px-6 lg:px-8">
-                <table class="w-full border-collapse" id="datatable_1">
+                <table class="w-full border-collapse" id="datatable_1_3">
                     <thead class="bg-slate-100 dark:bg-slate-700/20">
                         <tr>
                             <th class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase"
@@ -103,7 +102,11 @@
                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                     {{ $book->category->name }}</td>
                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                    {{ $book->status }}</td>
+                                    @if ($book->status == 'pending')
+                                        <span
+                                            class="bg-yellow-500/10 text-yellow-500 text-[11px] font-medium mr-1 px-2.5 py-0.5 rounded ">Pending</span>
+                                    @endif
+                                </td>
                                 <td>
                                     @unless ($book->image_path === null)
                                         <img src="{{ asset('storage/cover_images/' . $book->book_cover_path) }}"
@@ -117,12 +120,16 @@
                                     <form action="{{ route('proposal.validation', $book->id) }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="status" value="approved">
-                                        <button type="submit" class="btn btn-success">Terima</button>
+                                        <button type="submit"
+                                            class="text-white bg-green-500 hover:bg-green-600  focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 mb-2">
+                                            <i data-lucide="check"></i> Terima</button>
                                     </form>
                                     <form action="{{ route('proposal.validation', $book->id) }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="status" value="rejected">
-                                        <button type="submit" class="btn btn-danger">Tolak</button>
+                                        <button type="submit"
+                                            class="text-white bg-red-500 hover:bg-red-600  focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 mb-2">
+                                            <i data-lucide="ban"></i> Tolak</button>
                                     </form>
                                 </td>
                             </tr>
@@ -134,6 +141,8 @@
     </div><!--end card-body-->
     <!--end grid-->
 </div>
+
+
 @section('pagescripts')
     <script>
         // deletion modal

@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
 
         Book::factory(10)->create();
 
-        BookProposal::factory(10)->create();
+        BookProposal::factory(50)->create();
         // BookProposal::factory(10)->create();
         // BookDonation::factory(3)->create();
         BookDonation::factory()->create([
@@ -85,5 +85,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         BookLoan::factory(5)->create();
+
+        BookDonation::factory(50)->create();
     }
 }

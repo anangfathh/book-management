@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\BookCategory;
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\BookCategory;
 use App\Models\BookProposal;
 use App\Models\BookPublisher;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -36,6 +37,8 @@ class BookProposalFactory extends Factory
             'book_price' => $this->faker->randomFloat(2, 10, 100),
             'book_type' => $this->faker->randomElement(['softfile', 'hardfile']),
             'status' => $this->faker->randomElement(['pending', 'approved', 'rejected', 'closed']),
+
+            'created_at' => $this->faker->dateTimeBetween(Carbon::create(2024, 1, 1), Carbon::create(2024, 12, 31)),
         ];
     }
 }

@@ -42,7 +42,9 @@
                                         <span class="text-red-500">{{ $book->category->name }}</span>
                                     </td>
                                     <td class="p-3 text-base text-gray-700 dark:text-gray-400">
-                                        <span class="font-semibold">{{ $book->status }}</span>
+                                        <span
+                                            class="bg-yellow-500/10 text-yellow-500 text-[11px] font-medium mr-1 px-2.5 py-0.5 rounded ">{{ $book->status }}</span>
+
                                     </td>
                                 </tr>
                             @endforeach

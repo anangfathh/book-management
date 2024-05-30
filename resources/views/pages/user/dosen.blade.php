@@ -1,51 +1,69 @@
-@extends('layouts.master')
+<div class="hidden p-4 bg-gray-50 rounded-lg dark:bg-gray-800" id="published" role="tabpanel"
+    aria-labelledby="published-tab">
+    <div class="grid grid-cols-1 p-4">
+        <div class="sm:-mx-6 lg:-mx-8">
+            <div class="relative overflow-x-auto block w-full sm:px-6 lg:px-8">
+                <table class="w-full border-collapse" id="datatable_1_2">
+                    <thead class="bg-slate-100 dark:bg-slate-700/20">
+                        <tr>
+                            <th class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase"
+                                scope="col"></th>
+                            <th scope="col"
+                                class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                Nama
+                            </th>
+                            <th scope="col"
+                                class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                NIDN
+                            </th>
+                            <th scope="col"
+                                class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                NIP
+                            </th>
+                            <th scope="col"
+                                class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                Action
+                            </th>
 
-@section('content')
-    <h1>Daftar DosenS</h1>
-    <div class="container">
-        <table class="table">
-            <thead>
-                <tr>
-                <th scope="col">No</th>
-                <th scope="col">Nama</th>
-                <th scope="col">NIDN</th>
-                <th scope="col">NIP</th>
-                <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($lecturers as $index => $item)
-                <tr>
-                <th scope="row">{{ $index+1 }}</th>
-                <td>{{ $item->name }}</td>
-                <td>{{ $item->nidn }}</td>
-                <td>{{ $item->nip }}</td>
-                {{-- <td>
-                    @unless ($book->image_path === null)
-                        <img src="{{ asset('storage/cover_images/' . $book->image_path) }}" alt="{{ $book->title }}" width="100">
-                    @else
-                        <img src="https://via.placeholder.com/640x480.png/F6F5F2?text=NoImageAvailable" alt="No Image" width="100">
-                    @endunless
-                </td> --}}
-                <td>
-                    {{-- <a href="{{ route('user.show', $item->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a> --}}
-                    @role('admin')
-                    {{-- <a href="{{ route('user.edit', $item->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a> --}}
-                    <form id="deleteForm{{ $item->id }}" action="{{ route('user.destroy', $item->id) }}" method="POST" class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="button" class="btn btn-danger btn-sm delete-user"><i class="bi bi-trash"></i></button>
-                    </form>
-                    @endrole
-                </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-@endsection
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 1 -->
+                        @foreach ($lecturers as $index => $item)
+                            <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700">
+                                <th class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400"
+                                    scope="row">{{ $index + 1 }}</th>
+                                <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                    {{ $item->name }}</td>
+                                <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                    {{ $item->nidn }}</td>
 
-@section('pagescripts')
+                                <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                    {{ $item->nip }}</td>
+
+                                <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                    @role('admin')
+                                        {{-- <a href="{{ route('user.edit', $item->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a> --}}
+                                        <form id="deleteForm{{ $item->id }}"
+                                            action="{{ route('user.destroy', $item->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="text-white bg-red-500 hover:bg-red-600  focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 mb-2"><i
+                                                    data-lucide="trash"></i></button>
+                                        </form>
+                                    @endrole
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!--end card-body-->
+    <!--end grid-->
+</div>
+
 <script>
     // deletion modal
     document.querySelectorAll('.delete-user').forEach(button => {
@@ -60,4 +78,3 @@
         });
     });
 </script>
-@endsection

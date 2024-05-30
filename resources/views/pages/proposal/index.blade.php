@@ -1,57 +1,3 @@
-{{-- @extends('layouts.master')
-
-@section('content')
-    <h1>Usulan Buku</h1>
-    <div class="container">
-        <a href="{{ route('proposal.create') }}" class="btn btn-primary mb-3">New Proposal</a>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Author</th>
-                    <th scope="col">Kategori</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Cover</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($bookProposals as $index => $book)
-                    <tr>
-                        <th scope="row">{{ $index + 1 }}</th>
-                        <td>{{ $book->book_title }}</td>
-                        <td>{{ $book->book_author }}</td>
-                        <td>{{ $book->category->name }}</td>
-                        <td>{{ $book->status }}</td>
-                        <td>
-                            @unless ($book->book_cover_path === null)
-                                <img src="{{ asset('storage/book_covers/' . $book->book_cover_path) }}"
-                                    alt="{{ $book->title }}" width="100">
-                            @else
-                                <img src="https://via.placeholder.com/640x480.png/F6F5F2?text=NoImageAvailable" alt="No Image"
-                                    width="100">
-                            @endunless
-                        </td>
-                        <td>
-                            <a href="{{ route('proposal.show', $book->id) }}" class="btn btn-primary btn-sm">View</a>
-                            <a href="{{ route('proposal.edit', $book->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form id="deleteForm{{ $book->id }}" action="{{ route('proposal.destroy', $book->id) }}"
-                                method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button" class="btn btn-danger btn-sm delete-proposal">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-@endsection --}}
-
-
-
 @extends('layouts.app')
 @section('content')
     <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4">
@@ -64,7 +10,7 @@
                                 <button class="inline-block p-4 rounded-t-lg border-b-2 active" id="all-tab"
                                     data-fc-target="#all" type="button" role="tab" aria-controls="all"
                                     aria-selected="false">
-                                    All <span class="text-slate-400">(4251)</span>
+                                    All <span class="text-slate-400">{{ count($bookProposals) }}</span>
                                 </button>
                             </li>
                             @role('admin')
@@ -73,7 +19,7 @@
                                         class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                                         id="published-tab" data-fc-target="#published" type="button" role="tab"
                                         aria-controls="published" aria-selected="false">
-                                        Proposal Terproses <span class="text-slate-400">(3255)</span>
+                                        Proposal Terproses <span class="text-slate-400">{{ count($activeProposals) }}</span>
                                     </button>
                                 </li>
                                 <li class="me-2" role="presentation">
@@ -81,7 +27,7 @@
                                         class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                                         id="drafts-tab" data-fc-target="#drafts" type="button" role="tab"
                                         aria-controls="drafts" aria-selected="false">
-                                        Antrean Proposal <span class="text-slate-400">(25)</span>
+                                        Antrean Proposal <span class="text-slate-400">{{ count($queueProposals) }}</span>
                                     </button>
                                 </li>
                             @endrole
@@ -91,7 +37,7 @@
                         <div class="mb-2 w-44">
                             <a href="{{ route('proposal.create') }}"
                                 class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white text-md font-medium py-2 px-4 rounded">
-                                Add product
+                                Add Proposal
                             </a>
                         </div>
 
@@ -155,7 +101,20 @@
                                                             {{ $book->category->name }}</td>
                                                         <td
                                                             class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                            {{ $book->status }}</td>
+                                                            @if ($book->status == 'approved')
+                                                                <span
+                                                                    class="bg-green-500/10 text-green-500 text-[11px] font-medium mr-1 px-2.5 py-0.5 rounded ">Approved</span>
+                                                            @elseif ($book->status == 'pending')
+                                                                <span
+                                                                    class="bg-yellow-500/10 text-yellow-500 text-[11px] font-medium mr-1 px-2.5 py-0.5 rounded ">Pending</span>
+                                                            @elseif ($book->status == 'rejected')
+                                                                <span
+                                                                    class="bg-red-500/10 text-red-500 text-[11px] font-medium mr-1 px-2.5 py-0.5 rounded ">Rejected</span>
+                                                            @else
+                                                                <span
+                                                                    class="bg-gray-500/10 text-gray-500 text-[11px] font-medium mr-1 px-2.5 py-0.5 rounded ">Closed</span>
+                                                            @endif
+                                                        </td>
                                                         <td>
                                                             @unless ($book->book_cover_path === null)
                                                                 <img src="{{ asset('storage/book_covers/' . $book->book_cover_path) }}"
@@ -170,16 +129,19 @@
 
 
                                                             <a href="{{ route('proposal.show', $book->id) }}"
-                                                                class="btn btn-primary btn-sm">View</a>
+                                                                class="text-white bg-indigo-500 hover:bg-indigo-600  focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center dark:bg-indigo-600 dark:hover:bg-indigo-700 mb-2">
+                                                                <i data-lucide="eye"></i></a>
                                                             <a href="{{ route('proposal.edit', $book->id) }}"
-                                                                class="btn btn-warning btn-sm">Edit</a>
+                                                                class="text-white bg-primary-500 hover:bg-primary-600  focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center dark:bg-primary-600 dark:hover:bg-primary-700 mb-2">
+                                                                <i data-lucide="pencil"></i></a>
                                                             <form id="deleteForm{{ $book->id }}"
                                                                 action="{{ route('proposal.destroy', $book->id) }}"
                                                                 method="POST" class="d-inline">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="button"
-                                                                    class="btn btn-danger btn-sm delete-proposal">Delete</button>
+                                                                <button type="submit"
+                                                                    class="text-white bg-red-500 hover:bg-red-600  focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 mb-2">
+                                                                    <i data-lucide="trash"></i></button>
                                                             </form>
                                                         </td>
                                                     </tr>

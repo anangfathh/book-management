@@ -10,7 +10,7 @@
                                 <button class="inline-block p-4 rounded-t-lg border-b-2 active" id="all-tab"
                                     data-fc-target="#all" type="button" role="tab" aria-controls="all"
                                     aria-selected="false">
-                                    Book List <span class="text-slate-400">(4251)</span>
+                                    Book List <span class="text-slate-400">{{ $bookscount }}</span>
                                 </button>
                             </li>
                         </ul>

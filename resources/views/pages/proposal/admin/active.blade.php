@@ -54,7 +54,7 @@
     <div class="grid grid-cols-1 p-4">
         <div class="sm:-mx-6 lg:-mx-8">
             <div class="relative overflow-x-auto block w-full sm:px-6 lg:px-8">
-                <table class="w-full border-collapse" id="datatable_1">
+                <table class="w-full border-collapse" id="datatable_1_2">
                     <thead class="bg-slate-100 dark:bg-slate-700/20">
                         <tr>
                             <th class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase"
@@ -98,7 +98,12 @@
                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                     {{ $book->category->name }}</td>
                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                    {{ $book->status }}</td>
+                                    @if ($book->status == 'approved')
+                                        <span
+                                            class="bg-green-500/10 text-green-500 text-[11px] font-medium mr-1 px-2.5 py-0.5 rounded ">Approved</span>
+                                    @endif
+
+                                </td>
                                 <td>
                                     @unless ($book->image_path === null)
                                         <img src="{{ asset('storage/cover_images/' . $book->book_cover_path) }}"
@@ -112,7 +117,9 @@
                                     <form action="{{ route('proposal.closed', $book->id) }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="status" value="closed">
-                                        <button type="submit" class="btn btn-danger">Stop</button>
+                                        <button type="submit"
+                                            class="text-white bg-red-500 hover:bg-red-600  focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 mb-2">
+                                            <i data-lucide="ban"></i> Stop</button>
                                     </form>
                                 </td>
                             </tr>

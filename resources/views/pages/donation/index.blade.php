@@ -10,7 +10,7 @@
                                 <button class="inline-block p-4 rounded-t-lg border-b-2 active" id="all-tab"
                                     data-fc-target="#all" type="button" role="tab" aria-controls="all"
                                     aria-selected="false">
-                                    All <span class="text-slate-400">(4251)</span>
+                                    All <span class="text-slate-400">{{ count($bookDonations) }}</span>
                                 </button>
                             </li>
                             <li class="me-2" role="presentation">
@@ -18,7 +18,7 @@
                                     class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                                     id="published-tab" data-fc-target="#published" type="button" role="tab"
                                     aria-controls="published" aria-selected="false">
-                                    Queue <span class="text-slate-400">(3255)</span>
+                                    Queue <span class="text-slate-400">{{ count($queueDonations) }}</span>
                                 </button>
                             </li>
 
@@ -28,7 +28,7 @@
                         <div class="mb-2 w-44">
                             <a href="{{ route('donation.create') }}"
                                 class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white text-md font-medium py-2 px-4 rounded">
-                                Add product
+                                Add Donasi
                             </a>
                         </div>
                     </div>
@@ -42,7 +42,6 @@
                                         <table class="w-full border-collapse" id="datatable_1">
                                             <thead class="bg-slate-100 dark:bg-slate-700/20">
                                                 <tr>
-
                                                     <th class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase"
                                                         scope="col"></th>
                                                     <th scope="col"
@@ -118,12 +117,15 @@
                                                         <td
                                                             class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                             <a href="{{ route('donation.show', $donation->id) }}"
-                                                                class="btn btn-primary btn-sm">View</a>
+                                                                class="text-white bg-indigo-500 hover:bg-indigo-600  focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center dark:bg-indigo-600 dark:hover:bg-indigo-700 mb-2">
+                                                                <i data-lucide="eye"></i></a>
                                                             <a href="{{ route('donation.edit', $donation->id) }}"
-                                                                class="btn btn-warning btn-sm">Edit</a>
+                                                                class="text-white bg-primary-500 hover:bg-primary-600  focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center dark:bg-primary-600 dark:hover:bg-primary-700 mb-2">
+                                                                <i data-lucide="pencil"></i></a>
                                                             @if ($donation->book->jenis == 'softfile')
                                                                 <a href="{{ route('books.download', $donation->book->id) }}"
-                                                                    class="btn btn-primary">Download PDF</a>
+                                                                    class="text-white bg-green-500 hover:bg-green-600  focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 mb-2">
+                                                                    <i data-lucide="download"></i>Download PDF</a>
                                                             @endif
                                                             <form id="deleteForm{{ $donation->id }}"
                                                                 action="{{ route('donation.destroy', $donation->id) }}"
@@ -131,7 +133,8 @@
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="button"
-                                                                    class="btn btn-danger btn-sm delete-book">Delete</button>
+                                                                    class="text-white bg-red-500 hover:bg-red-600  focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 mb-2">
+                                                                    <i data-lucide="trash"></i></button>
                                                             </form>
                                                         </td>
                                                     </tr>
@@ -161,6 +164,8 @@
         <!--end col-->
     </div>
 @endsection
+
+
 
 @section('pagescripts')
     <script>

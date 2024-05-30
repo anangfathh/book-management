@@ -10,9 +10,27 @@
                                 <button class="inline-block p-4 rounded-t-lg border-b-2 active" id="all-tab"
                                     data-fc-target="#all" type="button" role="tab" aria-controls="all"
                                     aria-selected="false">
-                                    Riwayat Peminjaman <span class="text-slate-400">(4251)</span>
+                                    Riwayat Peminjaman <span class="text-slate-400">{{ count($bookLoans) }}</span>
                                 </button>
                             </li>
+                            @role('admin')
+                                <li class="me-2" role="presentation">
+                                    <button
+                                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        id="published-tab" data-fc-target="#published" type="button" role="tab"
+                                        aria-controls="published" aria-selected="false">
+                                        Antrean Peminjaman <span class="text-slate-400">{{ count($queueLoans) }}</span>
+                                    </button>
+                                </li>
+                                <li class="me-2" role="presentation">
+                                    <button
+                                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        id="drafts-tab" data-fc-target="#drafts" type="button" role="tab"
+                                        aria-controls="drafts" aria-selected="false">
+                                        Peminjaman Berlangsung <span class="text-slate-400">{{ count($activeLoans) }}</span>
+                                    </button>
+                                </li>
+                            @endrole
                         </ul>
                     </div>
                     <div class="flex flex-wrap gap-4 mb-3">
@@ -83,13 +101,17 @@
                                                         <td
                                                             class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                             @if ($loan->borrowed_status == 'borrowed')
-                                                                <span class="badge bg-info">Borrowed</span>
+                                                                <span
+                                                                    class="bg-green-500/10 text-green-500 text-[11px] font-medium mr-1 px-2.5 py-0.5 rounded ">Borrowed</span>
                                                             @elseif($loan->borrowed_status == 'pending')
-                                                                <span class="badge bg-warning">Pending</span>
+                                                                <span
+                                                                    class="bg-yellow-500/10 text-yellow-500 text-[11px] font-medium mr-1 px-2.5 py-0.5 rounded ">Pending</span>
                                                             @elseif($loan->borrowed_status == 'rejected')
-                                                                <span class="badge bg-danger">Rejected</span>
+                                                                <span
+                                                                    class="bg-red-500/10 text-red-500 text-[11px] font-medium mr-1 px-2.5 py-0.5 rounded ">Rejected</span>
                                                             @else
-                                                                <span class="badge bg-success">Returned</span>
+                                                                <span
+                                                                    class="bg-indigo-500/10 text-indigo-500 text-[11px] font-medium mr-1 px-2.5 py-0.5 rounded ">Returned</span>
                                                             @endif
                                                         </td>
                                                         <td
@@ -105,7 +127,8 @@
                                                         <td
                                                             class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                             <a href="{{ route('loan.show', $loan->id) }}"
-                                                                class="btn btn-primary btn-sm">View</a>
+                                                                class="text-white bg-indigo-500 hover:bg-indigo-600  focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center dark:bg-indigo-600 dark:hover:bg-indigo-700 mb-2">
+                                                                <i data-lucide="eye"></i></a>
                                                             @if ($loan->borrowed_status == 'pending')
                                                                 <form id="deleteForm{{ $loan->id }}"
                                                                     action="{{ route('loan.destroy', $loan->id) }}"
@@ -113,7 +136,8 @@
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button type="button"
-                                                                        class="btn btn-danger btn-sm delete-book">Delete</button>
+                                                                        class="text-white bg-red-500 hover:bg-red-600  focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 mb-2">
+                                                                        <i data-lucide="ban"></i></button>
                                                                 </form>
                                                             @endif
                                                     </tr>
@@ -125,7 +149,15 @@
                             </div><!--end card-body-->
                             <!--end grid-->
                         </div>
+                        @role('admin')
+                            @include('pages.loan.admin.index', [
+                                'queueLoans' => $queueLoans,
+                            ])
 
+                            @include('pages.loan.admin.active', [
+                                'activeLoans' => $activeLoans,
+                            ])
+                        @endrole
 
 
 

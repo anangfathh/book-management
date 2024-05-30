@@ -26,7 +26,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 
 Route::middleware(['auth', 'verified', 'role:dosen'])->group(function () {
     Route::get('books/{book}/loan', [BookLoanController::class, 'create'])->name('loan.make');
-    Route::get('/book-loans', [BookLoanController::class, 'index'])->name('loan.list');
+
     Route::post('/book-loans', [BookLoanController::class, 'store'])->name('loan.store');
     Route::delete('/book-loans/{bookLoan}', [BookLoanController::class, 'destroy'])->name('loan.destroy');
 });
@@ -37,6 +37,8 @@ Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show')
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('books/{book}/download', [BookController::class, 'download'])->name('books.download');
+
+     Route::get('/book-loans', [BookLoanController::class, 'index'])->name('loan.list');
 
     Route::get('/book-loans/{bookLoan}', [BookLoanController::class, 'show'])->name('loan.show');
     Route::get('/book-donations', [BookDonationController::class, 'index'])->name('donation.list');

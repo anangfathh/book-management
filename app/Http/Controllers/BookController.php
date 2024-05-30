@@ -13,7 +13,8 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::where('validation', 1)->get();
-        return view('pages.book.index', compact('books'));
+        $bookscount = Book::where('validation', 1)->count();
+        return view('pages.book.index', compact('books', 'bookscount'));
     }
 
     public function create()

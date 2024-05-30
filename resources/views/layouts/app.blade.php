@@ -111,6 +111,7 @@
     <script src="{{ asset('assets/libs/mobius1-selectr/selectr.min.js') }}"></script>
     @yield('pagescripts')
 
+
 </body>
 
 </html>
