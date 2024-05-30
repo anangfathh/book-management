@@ -14,9 +14,17 @@ class BookProposalController extends Controller
 {
     public function index()
     {
-        $bookProposals = BookProposal::with('user', 'category')->get();
+        if (Auth::user()->role === 'admin') {
+            $bookProposals = BookProposal::with('user', 'category')->get();
+        } else {
+            $bookProposals = BookProposal::with('user', 'category')->where('user_id', Auth::user()->id)->get();
+        }
 
-        return view('pages.proposal.index', compact('bookProposals'));
+        $activeProposals = BookProposal::where('status', 'approved')->get();
+        $queueProposals = BookProposal::where('status', 'pending')->get();
+
+
+        return view('pages.proposal.index', compact('bookProposals', 'queueProposals', 'activeProposals'));
     }
 
     public function create()
@@ -37,7 +45,7 @@ class BookProposalController extends Controller
             'publication_year' => 'required',
             'book_author' => 'nullable|string|max:255',
             'book_cover_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'book_description' => 'required|string',
+            'reason' => 'required|string',
             'book_price' => 'nullable|string|max:255',
             'book_type' => 'required|in:softfile,hardfile',
         ]);
@@ -64,7 +72,7 @@ class BookProposalController extends Controller
             $book_cover_path->storeAs('public/book_covers', $filename);
             $bookProposal->book_cover_path = $filename;
         }
-        $bookProposal->book_description = $request->book_description;
+        $bookProposal->reason = $request->reason;
         $bookProposal->book_price = $request->book_price;
         $bookProposal->book_type = $request->book_type;
         $bookProposal->status = 'pending';
@@ -82,8 +90,9 @@ class BookProposalController extends Controller
     {
         $users = User::all();
         $bookCategories = BookCategory::all();
+        $publishers = BookPublisher::all();
 
-        return view('pages.proposal.edit', compact('bookProposal', 'users', 'bookCategories'));
+        return view('pages.proposal.edit', compact('bookProposal', 'users', 'bookCategories', 'publishers'));
     }
 
     public function update(Request $request, BookProposal $bookProposal)
@@ -94,7 +103,7 @@ class BookProposalController extends Controller
             'publisher' => 'required|string|max:255',
             'book_author' => 'nullable|string|max:255',
             'book_cover_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'book_description' => 'required|string',
+            'reason' => 'required|string',
             'book_price' => 'nullable|string|max:255',
             'book_type' => 'required|in:softfile,hardfile',
         ]);
@@ -102,7 +111,10 @@ class BookProposalController extends Controller
         $bookProposal->user_id = Auth::user()->id;
         $bookProposal->category_id = $request->category_id;
         $bookProposal->book_title = $request->book_title;
-        $bookProposal->publisher = $request->publisher;
+        $bookProposal->publisher_id = $request->publisher;
+
+
+
         $bookProposal->book_author = $request->book_author;
         if ($request->hasFile('book_cover_path')) {
             if ($bookProposal->book_cover_path && Storage::exists($bookProposal->book_cover_path)) {
@@ -113,7 +125,7 @@ class BookProposalController extends Controller
             $book_cover_path->storeAs('public/book_covers', $filename);
             $bookProposal->book_cover_path = $filename;
         }
-        $bookProposal->book_description = $request->book_description;
+        $bookProposal->reason = $request->reason;
         $bookProposal->book_price = $request->book_price;
         $bookProposal->book_type = $request->book_type;
         $bookProposal->save();
@@ -133,9 +145,13 @@ class BookProposalController extends Controller
 
     public function proposalQueue()
     {
-        $bookProposals = BookProposal::where('status', 'pending')->get();
+        $bookProposals = BookProposal::with('user', 'category')->get();
 
-        return view('pages.proposal.admin.queue', compact('bookProposals'));
+        $queueProposals = BookProposal::where('status', 'pending')->get();
+
+        $activeProposals = BookProposal::where('status', 'approved')->get();
+
+        return view('pages.proposal.index', compact('bookProposals', 'queueProposals', 'activeProposals'));
     }
 
     public function proposalValidation($id, Request $request)
@@ -149,8 +165,10 @@ class BookProposalController extends Controller
 
     public function activeProposal()
     {
-        $bookProposals = BookProposal::where('status', 'approved')->get();
-        return view('pages.proposal.admin.active', compact('bookProposals'));
+        $activeProposals = BookProposal::where('status', 'approved')->get();
+        $bookProposals = BookProposal::with('user', 'category')->get();
+        $queueProposals = BookProposal::where('status', 'pending')->get();
+        return view('pages.proposal.index', compact('activeProposals', 'bookProposals', 'queueProposals'));
     }
 
     public function closeProposal($id)

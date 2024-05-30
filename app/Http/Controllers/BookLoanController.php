@@ -16,9 +16,17 @@ class BookLoanController extends Controller
      */
     public function index()
     {
-        $bookLoans = BookLoan::with(['book', 'user'])->get();
+        if (Auth::user()->role === 'admin') {
+            $bookLoans = BookLoan::with(['book', 'user'])->get();
+        } else {
+            $bookLoans = BookLoan::with(['book', 'user'])->where('user_id', Auth::user()->id)->get();
+        }
 
-        return view('pages.loan.index', compact('bookLoans'));
+        $queueLoans = BookLoan::where('borrowed_status', 'pending')->get();
+        $activeLoans = BookLoan::where('borrowed_status', 'borrowed')->get();
+
+
+        return view('pages.loan.index', compact('bookLoans', 'activeLoans', 'queueLoans'));
     }
 
     /**
@@ -49,6 +57,9 @@ class BookLoanController extends Controller
         $bookLoan->user_id = Auth::user()->id;
         $bookLoan->loan_date = Carbon::parse($request->loan_date);
         $bookLoan->deadline_date = Carbon::parse($request->deadline_date);
+        $book = Book::find($bookLoan->book_id);
+        $book->jumlah -= $bookLoan->jumlah;
+        $book->save();
         $bookLoan->save();
 
         return redirect()->route('loan.list')->with('success', 'Book loan created successfully.');
@@ -102,34 +113,61 @@ class BookLoanController extends Controller
 
     public function loanQueue()
     {
-        $bookLoans = BookLoan::where('borrowed_status', 'pending')->get();
-
-        return view('pages.loan.admin.index', compact('bookLoans'));
+        if (Auth::user()->role === 'admin') {
+            $bookLoans = BookLoan::with(['book', 'user'])->get();
+        } else {
+            $bookLoans = BookLoan::with(['book', 'user'])->where('user_id', Auth::user()->id)->get();
+        }
+        $activeLoans = BookLoan::where('borrowed_status', 'borrowed')->get();
+        $queueLoans = BookLoan::where('borrowed_status', 'pending')->get();
+        return view('pages.loan.index', compact('bookLoans', 'activeLoans', 'queueLoans'));
     }
 
     public function loanValidation($id, Request $request)
     {
         $bookLoan = BookLoan::find($id);
         $bookLoan->borrowed_status = $request->status;
+        if ($bookLoan->borrowed_status === 'rejected') {
+            $book = Book::find($bookLoan->book_id);
+            $book->jumlah += $bookLoan->jumlah;
+            $book->save();
+        }
         $bookLoan->save();
 
-        return redirect()->route('loan.queue')->with('success', 'Book loan validation successfully.');
+        return redirect()->route('loan.list')->with('success', 'Book loan validation successfully.');
     }
 
     public function loanActive()
     {
-        $bookLoans = BookLoan::where('borrowed_status', 'borrowed')->get();
+        if (Auth::user()->role === 'admin') {
+            $bookLoans = BookLoan::with(['book', 'user'])->get();
+        } else {
+            $bookLoans = BookLoan::with(['book', 'user'])->where('user_id', Auth::user()->id)->get();
+        }
+        $queueLoans = BookLoan::where('borrowed_status', 'pending')->get();
+        $activeLoans = BookLoan::where('borrowed_status', 'borrowed')->get();
 
-        return view('pages.loan.admin.active', compact('bookLoans'));
+        return view('pages.loan.index', compact('activeLoans', 'bookLoans', 'queueLoans'));
     }
 
     public function loanReturn($id)
     {
-        $bookLoan = BookLoan::find($id);
-        $bookLoan->borrowed_status = 'returned';
-        $bookLoan->return_date = now();
-        $bookLoan->save();
+        $bookLoans = BookLoan::with(['book', 'user'])->get();
+        $activeLoans = BookLoan::where('borrowed_status', 'borrowed')->get();
 
-        return redirect()->route('loan.active')->with('success', 'Book loan returned succesfully');
+        $activeLoans = BookLoan::find($id);
+        $activeLoans->borrowed_status = 'returned';
+        $activeLoans->return_date = now();
+        $book = Book::find($activeLoans->book_id);
+        $book->jumlah += $activeLoans->jumlah;
+        $book->save();
+        $activeLoans->save();
+
+        return redirect()->route('loan.active')
+            ->with([
+                'success' => 'Book loan returned successfully',
+                'activeLoans' => $activeLoans,
+                'bookLoans' => $bookLoans
+            ]);
     }
 }

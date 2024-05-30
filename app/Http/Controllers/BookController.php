@@ -13,7 +13,8 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::where('validation', 1)->get();
-        return view('pages.book.index', compact('books'));
+        $bookscount = Book::where('validation', 1)->count();
+        return view('pages.book.index', compact('books', 'bookscount'));
     }
 
     public function create()
@@ -72,7 +73,7 @@ class BookController extends Controller
         if ($request->hasFile('pdf_path')) {
             $pdf_path = $request->file('pdf_path');
             $filename = time() . '.' . $pdf_path->getClientOriginalExtension();
-            $pdf_path->storeAs('public/cover_images', $filename);
+            $pdf_path->storeAs('public/pdf_files', $filename);
             $book->pdf_path = $filename;
         }
 

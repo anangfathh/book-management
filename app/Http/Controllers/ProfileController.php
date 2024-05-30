@@ -62,7 +62,13 @@ class ProfileController extends Controller
     public function getMahasiswa()
     {
         $students = User::where('role', 'mahasiswa')->get();
-        return view('pages.user.mahasiswa', ['students' => $students]);
+        $lecturers = User::where('role', 'dosen')->get();
+        $alumni = User::where('role', 'alumni')->get();
+
+        $studentscount = User::where('role', 'mahasiswa')->count();
+        $lecturerscount = User::where('role', 'dosen')->count();
+        $alumnicount = User::where('role', 'alumni')->count();
+        return view('pages.user.mahasiswa', ['students' => $students, 'lecturers' => $lecturers, 'alumni' => $alumni, ]);
     }
     public function getDosen()
     {

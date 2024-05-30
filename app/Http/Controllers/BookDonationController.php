@@ -18,12 +18,13 @@ class BookDonationController extends Controller
      */
     public function index()
     {
+         $queueDonations = BookDonation::where('status', 'pending')->get();
         if (Auth::user()->role === 'admin') {
             $bookDonations = BookDonation::all();
         } else {
             $bookDonations = BookDonation::where('user_id', Auth::user()->id)->with('user', 'book')->get();
         }
-        return view('pages.donation.index', compact('bookDonations'));
+        return view('pages.donation.index', compact('bookDonations', 'queueDonations'));
     }
 
     /**
@@ -223,8 +224,8 @@ class BookDonationController extends Controller
 
     public function donationQueue()
     {
-        $bookDonations = BookDonation::where('status', 'pending')->get();
-        return view('pages.donation.admin.queue', compact('bookDonations'));
+        $queueDonations = BookDonation::where('status', 'pending')->get();
+        return view('pages.donation.admin.queue', compact('queueDonations'));
     }
 
     public function donationHistory()
@@ -235,17 +236,17 @@ class BookDonationController extends Controller
 
     public function donationValidation($id, Request $request)
     {
-        $bookDonation = BookDonation::find($id);
-        $bookDonation->status = $request->status;
-        $bookDonation->save();
+        $queueDonations = BookDonation::find($id);
+        $queueDonations->status = $request->status;
+        $queueDonations->save();
 
         if ($request->status === 'accepted') {
-            $book = Book::find($bookDonation->book->id);
-            $book->jumlah = $book->jumlah + $bookDonation->jumlah;
+            $book = Book::find($queueDonations->book->id);
+            $book->jumlah = $book->jumlah + $queueDonations->jumlah;
             $book->validation = 1;
             $book->save();
         }
 
-        return redirect()->route('donation.queue')->with('succes', 'Book Donation status was changed');
+        return redirect()->route('donation.list')->with('succes', 'Book Donation status was changed');
     }
 }
