@@ -113,7 +113,11 @@ class BookLoanController extends Controller
 
     public function loanQueue()
     {
-        $bookLoans = BookLoan::where('borrowed_status', 'pending')->get();
+        if (Auth::user()->role === 'admin') {
+            $bookLoans = BookLoan::with(['book', 'user'])->get();
+        } else {
+            $bookLoans = BookLoan::with(['book', 'user'])->where('user_id', Auth::user()->id)->get();
+        }
         $activeLoans = BookLoan::where('borrowed_status', 'borrowed')->get();
         $queueLoans = BookLoan::where('borrowed_status', 'pending')->get();
         return view('pages.loan.index', compact('bookLoans', 'activeLoans', 'queueLoans'));
@@ -135,7 +139,11 @@ class BookLoanController extends Controller
 
     public function loanActive()
     {
-        $bookLoans = BookLoan::with(['book', 'user'])->get();
+        if (Auth::user()->role === 'admin') {
+            $bookLoans = BookLoan::with(['book', 'user'])->get();
+        } else {
+            $bookLoans = BookLoan::with(['book', 'user'])->where('user_id', Auth::user()->id)->get();
+        }
         $queueLoans = BookLoan::where('borrowed_status', 'pending')->get();
         $activeLoans = BookLoan::where('borrowed_status', 'borrowed')->get();
 

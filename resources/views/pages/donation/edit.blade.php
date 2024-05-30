@@ -109,6 +109,17 @@
             </div>
 
             <div class="form-group">
+                <label class="font-medium text-sm text-slate-600 dark:text-slate-400"
+                    for="jumlah">jumlah</label>
+                <input type="number" name="jumlah" id="jumlah"
+                    class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700 form-control @error('jumlah') is-invalid @enderror"
+                    value="{{ $bookDonation->jumlah }}" required>
+                @error('jumlah')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
                 <label class="font-medium text-sm text-slate-600 dark:text-slate-400" for="jenis">Jenis</label>
                 <select name="jenis" id="jenis"
                     class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700 form-control @error('jenis') is-invalid @enderror"
@@ -121,6 +132,7 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+
 
             <div id="pdf-path-field" class="form-group" style="display: none;">
                 <label class="font-medium text-sm text-slate-600 dark:text-slate-400" for="pdf_path">PDF
