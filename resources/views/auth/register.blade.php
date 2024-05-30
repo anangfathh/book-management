@@ -31,6 +31,15 @@
                 </h3>
                 <p class="text-xs text-slate-400">Sign in to use Dashboard.</p>
             </div>
+                @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
             <form class="p-6" method="POST" action="{{ route('register') }}">
                 @csrf

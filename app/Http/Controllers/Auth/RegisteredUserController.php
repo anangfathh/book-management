@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'nim' => ['required', new ValidNim],
+            'nim' => ['nullable', new ValidNim],
             'nip' => ['nullable', 'max:18'],
             'nidn' => ['nullable', 'max:10'],
             'role' => ['required', 'in:mahasiswa,dosen,admin,alumni'],
