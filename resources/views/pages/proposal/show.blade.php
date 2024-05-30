@@ -64,7 +64,9 @@
                                 <h6 class="text-sm font-medium text-slate-800 dark:text-slate-400">Pengusul :
                                     {{ $bookProposal->user->name }}</h6>
                                 <h6 class="text-sm font-medium text-slate-800 dark:text-slate-400">Status :
-                                    {{ $bookProposal->statush }}</h6>
+                                    {{ $bookProposal->status }}</h6>
+                                <h6 class="text-sm font-medium text-slate-800 dark:text-slate-400">Alasan Pengajuan :
+                                    {{ $bookProposal->reason }}</h6>
 
                                 <a href="{{ route('proposal.edit', $bookProposal->id) }}"
                                     class="inline-block focus:outline-none text-slate-600 hover:bg-brand-500 hover:text-white bg-transparent border border-gray-200 dark:bg-transparent dark:text-slate-400 dark:hover:text-white dark:border-gray-700 dark:hover:bg-brand-500  text-sm font-medium py-2 px-3 rounded"><i

@@ -91,9 +91,17 @@
 
                                                             @if ($book->jenis == 'hardfile')
                                                                 @role('dosen')
-                                                                    <a href="{{ route('loan.make', $book->id) }}"
-                                                                        class="text-white bg-primary-500 hover:bg-primary-600  focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center dark:bg-primary-600 dark:hover:bg-primary-700 mb-2">
+                                                                    @if($book->jumlah > 0)
+                                                                        <a href="{{ route('loan.make', $book->id) }}"
+                                                                        class="text-white bg-primary-500 hover:bg-primary-600 focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center dark:bg-primary-600 dark:hover:bg-primary-700 mb-2">
                                                                         <i data-lucide="album"></i> Borrow
+                                                                        </a>
+                                                                    @else
+                                                                        <button onclick="alert('This book is currently unavailable for borrowing.');"
+                                                                                class="text-white bg-gray-500 hover:bg-gray-600 focus:outline-none font-medium rounded text-sm px-2 py-1 text-center inline-flex items-center mb-2">
+                                                                        <i data-lucide="album"></i> Borrow
+                                                                        </button>
+                                                                    @endif
                                                                     @endrole
                                                                 @else
                                                                     <a href="{{ route('books.download', $book->id) }}"

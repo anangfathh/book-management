@@ -14,11 +14,15 @@ class BookProposalController extends Controller
 {
     public function index()
     {
-        $bookProposals = BookProposal::with('user', 'category')->get();
-
-        $queueProposals = BookProposal::where('status', 'pending')->get();
+        if (Auth::user()->role === 'admin') {
+            $bookProposals = BookProposal::with('user', 'category')->get();
+        } else {
+            $bookProposals = BookProposal::with('user', 'category')->where('user_id', Auth::user()->id)->get();
+        }
 
         $activeProposals = BookProposal::where('status', 'approved')->get();
+        $queueProposals = BookProposal::where('status', 'pending')->get();
+
 
         return view('pages.proposal.index', compact('bookProposals', 'queueProposals', 'activeProposals'));
     }
@@ -41,7 +45,7 @@ class BookProposalController extends Controller
             'publication_year' => 'required',
             'book_author' => 'nullable|string|max:255',
             'book_cover_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'book_description' => 'required|string',
+            'reason' => 'required|string',
             'book_price' => 'nullable|string|max:255',
             'book_type' => 'required|in:softfile,hardfile',
         ]);
@@ -68,7 +72,7 @@ class BookProposalController extends Controller
             $book_cover_path->storeAs('public/book_covers', $filename);
             $bookProposal->book_cover_path = $filename;
         }
-        $bookProposal->book_description = $request->book_description;
+        $bookProposal->reason = $request->reason;
         $bookProposal->book_price = $request->book_price;
         $bookProposal->book_type = $request->book_type;
         $bookProposal->status = 'pending';
@@ -99,7 +103,7 @@ class BookProposalController extends Controller
             'publisher' => 'required|string|max:255',
             'book_author' => 'nullable|string|max:255',
             'book_cover_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'book_description' => 'required|string',
+            'reason' => 'required|string',
             'book_price' => 'nullable|string|max:255',
             'book_type' => 'required|in:softfile,hardfile',
         ]);
@@ -121,7 +125,7 @@ class BookProposalController extends Controller
             $book_cover_path->storeAs('public/book_covers', $filename);
             $bookProposal->book_cover_path = $filename;
         }
-        $bookProposal->book_description = $request->book_description;
+        $bookProposal->reason = $request->reason;
         $bookProposal->book_price = $request->book_price;
         $bookProposal->book_type = $request->book_type;
         $bookProposal->save();

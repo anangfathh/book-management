@@ -58,7 +58,7 @@
                                 <h6 class="text-sm font-medium text-slate-800 dark:text-slate-400">Jumlah :
                                     {{ $bookDonation->book->jumlah }}</h6>
 
-                                <h6 class="text-sm font-medium text-slate-800 dark:text-slate-400">Jumlah :
+                                <h6 class="text-sm font-medium text-slate-800 dark:text-slate-400">Donatur :
                                     {{ $bookDonation->user->name }}</h6>
                                 @if ($bookDonation->status == 'Accepted')
                                     <span class="badge bg-success">Accepted</span>

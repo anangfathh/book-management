@@ -116,11 +116,11 @@
                         </div>
                         <div class="form-group">
                             <label class="font-medium text-sm text-slate-600 dark:text-slate-400"
-                                for="book_description">Deskripsi Buku</label>
-                            <textarea name="book_description" id="book_description"
-                                class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-1 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700 form-control @error('book_description') is-invalid @enderror"
-                                required>{{ old('book_description') }}</textarea>
-                            @error('book_description')
+                                for="reason">Alasan Pengajuan</label>
+                            <textarea name="reason" id="reason"
+                                class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-1 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700 form-control @error('reason') is-invalid @enderror"
+                                required>{{ old('reason') }}</textarea>
+                            @error('reason')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

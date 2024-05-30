@@ -13,15 +13,15 @@
                                     All <span class="text-slate-400">{{ count($bookProposals) }}</span>
                                 </button>
                             </li>
+                            <li class="me-2" role="presentation">
+                                <button
+                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                    id="published-tab" data-fc-target="#published" type="button" role="tab"
+                                    aria-controls="published" aria-selected="false">
+                                    Proposal Terproses <span class="text-slate-400">{{ count($activeProposals) }}</span>
+                                </button>
+                            </li>
                             @role('admin')
-                                <li class="me-2" role="presentation">
-                                    <button
-                                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                        id="published-tab" data-fc-target="#published" type="button" role="tab"
-                                        aria-controls="published" aria-selected="false">
-                                        Proposal Terproses <span class="text-slate-400">{{ count($activeProposals) }}</span>
-                                    </button>
-                                </li>
                                 <li class="me-2" role="presentation">
                                     <button
                                         class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
@@ -153,10 +153,11 @@
                             </div><!--end card-body-->
                             <!--end grid-->
                         </div>
-                        @role('admin')
+
                             @include('pages.proposal.admin.active', [
                                 'activeProposals' => $activeProposals,
                             ])
+                        @role('admin')
                             @include('pages.proposal.admin.queue', ['queueProposals' => $queueProposals])
                         @endrole
 

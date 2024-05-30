@@ -79,10 +79,12 @@
                                 class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                 Cover
                             </th>
+                            @role('admin')
                             <th scope="col"
                                 class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                 Action
                             </th>
+                            @endrole
                         </tr>
                     </thead>
                     <tbody>
@@ -113,6 +115,7 @@
                                             alt="No Image" width="100">
                                     @endunless
                                 </td>
+                                @role('admin')
                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                     <form action="{{ route('proposal.closed', $book->id) }}" method="POST">
                                         @csrf
@@ -122,6 +125,7 @@
                                             <i data-lucide="ban"></i> Stop</button>
                                     </form>
                                 </td>
+                                @endrole
                             </tr>
                         @endforeach
                     </tbody>

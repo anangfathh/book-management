@@ -50,18 +50,14 @@ class DatabaseSeeder extends Seeder
             'nip' => '3189632967247'
         ]);
 
-        BookCategory::factory()->create([
-            'name' => 'Karya Ilmiah',
-            'slug' => Str::slug('Karya Ilmiah')
-        ]);
-        BookCategory::factory()->create([
-            'name' => 'Fiksi',
-            'slug' => Str::slug('Fiksi')
-        ]);
-        BookCategory::factory()->create([
-            'name' => 'Biografi',
-            'slug' => Str::slug('Biografi')
-        ]);
+        $categories = ['Fantasi', 'Sains', 'Biografi', 'Psikologi', 'Teknologi', 'Manga', 'Komedi', 'Kamus', 'Gaya Hidup', 'Olahraga', 'Bahasa dan Sastra', 'Romansa', 'Politik', 'Horor/Thriller', 'Misteri', 'Agama', 'Bisnis', 'Karya Tulis'];
+
+        foreach ($categories as $category) {
+            BookCategory::create([
+                'name' => $category,
+                'slug' => Str::slug($category)
+            ]);
+        }
 
         Book::factory(10)->create();
 

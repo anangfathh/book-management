@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('publication_year');
             $table->string('book_author')->nullable();
             $table->string('book_cover_path')->nullable();
-            $table->text('book_description');
+            $table->text('reason');
             $table->string('book_price')->nullable();
             $table->enum('book_type', ['softfile', 'hardfile']);
             $table->enum('status', ['pending', 'approved', 'rejected', 'closed'])->default('pending');
