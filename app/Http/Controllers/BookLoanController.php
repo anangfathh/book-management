@@ -17,7 +17,7 @@ class BookLoanController extends Controller
     public function index()
     {
         $bookLoans = BookLoan::with(['book', 'user'])->get();
-         $queueLoans = BookLoan::where('borrowed_status', 'pending')->get();
+        $queueLoans = BookLoan::where('borrowed_status', 'pending')->get();
         $activeLoans = BookLoan::where('borrowed_status', 'borrowed')->get();
 
 
