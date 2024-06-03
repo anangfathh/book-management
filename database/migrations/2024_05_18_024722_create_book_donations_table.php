@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
             // $table->foreignId('category_id')->references('id')->on('book_categories')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('book_id')->references('id')->on('books')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('book_id')->references('id')->on('books')->cascadeOnDelete()->cascadeOnUpdate();
             $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->integer('jumlah');
             $table->timestamps();
